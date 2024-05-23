@@ -15,6 +15,40 @@ const schema = a.schema({
     .authorization((allow) => [allow.owner()]),
 });
 
+//Model for Credit Accounts
+const schema = a.schema({
+  CreditAccountInfo: a
+    .model({
+      accountNumber: a.string(),
+      accountStatus: a.enum(['ACTIVE','INACTIVE']),
+      availableCredit: a.float(),
+      balanceOwing: a.float(),
+      minimumDue: a.float(),
+      dueDate: a.date(),
+      monthsPaid: a.string(),
+      monthsDefault: a.string(),
+      userId: a.string()
+    })
+    .authorization((allow) => [allow.group('Debtor')]),
+});
+
+//Model for Credit Transactions
+const schema = a.schema({
+  CreditTransactions: a
+    .model({
+      fromAccount: a.string(),
+      transactionType: a.enum(['Debit','Credit']),
+      transactionAmount: a.float(),
+      balanceOwing: a.float(),
+      providerType: a.string(),
+      serviceProvider: a.string(),
+      userId: a.string()
+    })
+    .authorization((allow) => [allow.group('Debtor')]),
+});
+
+
+
 export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
