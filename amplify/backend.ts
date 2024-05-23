@@ -9,4 +9,4 @@ defineBackend({
 
 
 const { cfnIdentityPool } = backend.auth.resources.cfnResources;
-cfnIdentityPool.allowUnauthenticatedIdentities = false;
+cfnIdentityPool.allowUnauthenticatedIdentities = true;
