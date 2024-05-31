@@ -15,22 +15,22 @@ const schema = a.schema({
     .authorization((allow) => [allow.owner()]),
 });
 
-//Model for Credit Accounts
-const schema = a.schema({
-  CreditAccountInfo: a
-    .model({
-      accountNumber: a.string(),
-      //accountStatus: a.enum(['ACTIVE','INACTIVE']),
-      availableCredit: a.float(),
-      balanceOwing: a.float(),
-      minimumDue: a.float(),
-      dueDate: a.date(),
-      monthsPaid: a.string(),
-      monthsDefault: a.string(),
-      userId: a.string()
-    })
-    .authorization((allow) => [allow.group('Creditee')]),
-});
+// //Model for Credit Accounts
+// const schema = a.schema({
+//   CreditAccountInfo: a
+//     .model({
+//       accountNumber: a.string(),
+//       //accountStatus: a.enum(['ACTIVE','INACTIVE']),
+//       availableCredit: a.float(),
+//       balanceOwing: a.float(),
+//       minimumDue: a.float(),
+//       dueDate: a.date(),
+//       monthsPaid: a.string(),
+//       monthsDefault: a.string(),
+//       userId: a.string()
+//     })
+//     .authorization((allow) => [allow.group('Creditee')]),
+// });
 
 // //Model for Credit Transactions
 // const schema = a.schema({
