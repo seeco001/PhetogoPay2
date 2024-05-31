@@ -20,7 +20,7 @@ const schema = a.schema({
   CreditAccountInfo: a
     .model({
       accountNumber: a.string(),
-      accountStatus: a.enum(['ACTIVE','INACTIVE']),
+      //accountStatus: a.enum(['ACTIVE','INACTIVE']),
       availableCredit: a.float(),
       balanceOwing: a.float(),
       minimumDue: a.float(),
@@ -29,23 +29,23 @@ const schema = a.schema({
       monthsDefault: a.string(),
       userId: a.string()
     })
-    .authorization((allow) => [allow.group('Debtor')]),
+    .authorization((allow) => [allow.group('Creditee')]),
 });
 
-//Model for Credit Transactions
-const schema = a.schema({
-  CreditTransactions: a
-    .model({
-      fromAccount: a.string(),
-      transactionType: a.enum(['Debit','Credit']),
-      transactionAmount: a.float(),
-      balanceOwing: a.float(),
-      providerType: a.string(),
-      serviceProvider: a.string(),
-      userId: a.string()
-    })
-    .authorization((allow) => [allow.group('Debtor')]),
-});
+// //Model for Credit Transactions
+// const schema = a.schema({
+//   CreditTransactions: a
+//     .model({
+//       fromAccount: a.string(),
+//       transactionType: a.enum(['Debit','Credit']),
+//       transactionAmount: a.float(),
+//       balanceOwing: a.float(),
+//       providerType: a.string(),
+//       serviceProvider: a.string(),
+//       userId: a.string()
+//     })
+//     .authorization((allow) => [allow.group('Debtor')]),
+// });
 
 
 
