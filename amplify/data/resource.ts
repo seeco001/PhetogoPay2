@@ -18,7 +18,7 @@ const schema = a
                 netIncome: a.string(),
                 disIncome: a.string(),
                 localExpense: a.string(),
-                signDeclaration: a.boolean()
+                signDeclaration: a.stringk()
             })
             .authorization((allow) => [
                 allow.ownerDefinedIn("profileOwner")]

@@ -54,7 +54,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
         netIncome: `${event.userName}`,
         disIncome: `${event.userName}`,
         localExpense: `${event.userName}`,
-        signDeclaration: false
+        signDeclaration: `${event.userName}`
       },
     },
   });
