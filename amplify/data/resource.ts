@@ -24,6 +24,8 @@ const schema = a
                 localExpense: a.string(),
                 signDeclaration: a.boolean()
             })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner")]
     })
     .authorization((allow) => [allow.resource(postConfirmation)]);
 export type Schema = ClientSchema<typeof schema>;
