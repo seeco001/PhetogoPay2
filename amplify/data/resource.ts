@@ -21,7 +21,8 @@ const schema = a
                 signDeclaration: a.string()
             })
             .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner")]
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
     })
     .authorization((allow) => [allow.resource(postConfirmation)]);
 export type Schema = ClientSchema<typeof schema>;
