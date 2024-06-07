@@ -4,6 +4,39 @@ import { postConfirmation } from "../auth/post-confirmation/resource";
 
 const schema = a
     .schema({
+
+        CreditTransaction: a
+            .model({
+                profileId: a.id(),
+                fromAccount: a.string(),
+                transType: a.string(),
+                providerName: a.string(),
+                providerType: a.string(),
+                amount: a.string(),
+                userProfiles: a.belongsTo('UserProfile','profileId')
+            })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
+
+        CreditAccountInfo: a
+            .model({
+                profileId: a.id(),
+                creditAccount: a.string(),
+                accountStatus: a.string(),
+                availableCredit: a.string(),
+                balanceOwing: a.string(),
+                creditLimit: a.string(),
+                minimumDue: a.string(),
+                dueDate: a.string(),
+                monthsPaid: a.string(),
+                monthsDefault: a.string(),
+                userProfiles: a.belongsTo('UserProfile','profileId')
+            })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
+
         UserProfile: a
             .model({
                 email: a.string(),
@@ -18,11 +51,14 @@ const schema = a
                 netIncome: a.string(),
                 disIncome: a.string(),
                 localExpense: a.string(),
-                signDeclaration: a.string()
+                signDeclaration: a.string(),
+                creditTransaction: a.hasMany('CreditTransaction','profileId'),
+                creditAccountInfo: a.hasOne('CreditAccountInfo','profileId')
             })
             .authorization((allow) => [
                 allow.ownerDefinedIn("profileOwner"),
             ]),
+
     })
     .authorization((allow) => [allow.resource(postConfirmation)]);
 export type Schema = ClientSchema<typeof schema>;
