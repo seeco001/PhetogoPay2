@@ -39,7 +39,7 @@ const client = generateClient<Schema>({
 });
 
 export const handler: PostConfirmationTriggerHandler = async (event) => {
-  await client.graphql({
+  const creditAccountInfoResponse = await client.graphql({
     query: createCreditAccountInfo,
     variables: {
       input: {
@@ -56,6 +56,8 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
     },
   });
 
+  const creditAccountId = creditAccountInfoResponse.data.createCreditAccountInfo.id
+
   await client.graphql({
       query: createUserProfile,
       variables: {
@@ -63,7 +65,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
           email: event.request.userAttributes.email,
           profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
           walletAccount: ``,
-          creditAccount: ``,
+          creditAccount: creditAccountId,
           name: ``,
           surname: ``,
           govId: ``,
