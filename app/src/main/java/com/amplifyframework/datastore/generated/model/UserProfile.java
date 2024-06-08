@@ -1,5 +1,10 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
+import com.amplifyframework.core.model.ModelList;
+import com.amplifyframework.core.model.annotations.HasOne;
+import com.amplifyframework.core.model.ModelReference;
+import com.amplifyframework.core.model.LoadedModelReferenceImpl;
 import com.amplifyframework.core.model.temporal.Temporal;
 import com.amplifyframework.core.model.ModelIdentifier;
 
@@ -55,6 +60,8 @@ public final class UserProfile implements Model {
   private final @ModelField(targetType="String") String disIncome;
   private final @ModelField(targetType="String") String localExpense;
   private final @ModelField(targetType="String") String signDeclaration;
+  private final @ModelField(targetType="CreditTransaction") @HasMany(associatedWith = "userProfiles", type = CreditTransaction.class) ModelList<CreditTransaction> creditTransaction = null;
+  private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfiles", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> creditAccountInfo = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -117,6 +124,14 @@ public final class UserProfile implements Model {
   
   public String getSignDeclaration() {
       return signDeclaration;
+  }
+  
+  public ModelList<CreditTransaction> getCreditTransaction() {
+      return creditTransaction;
+  }
+  
+  public ModelReference<CreditAccountInfo> getCreditAccountInfo() {
+      return creditAccountInfo;
   }
   
   public Temporal.DateTime getCreatedAt() {
