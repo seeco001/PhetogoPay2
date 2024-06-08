@@ -4,6 +4,7 @@ import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 import { env } from "$amplify/env/post-confirmation";
 import { createUserProfile } from "./graphql/mutations";
+import { createCreditAccountInfo } from "./graphql/mutations";
 
 Amplify.configure(
   {
@@ -39,25 +40,42 @@ const client = generateClient<Schema>({
 
 export const handler: PostConfirmationTriggerHandler = async (event) => {
   await client.graphql({
-    query: createUserProfile,
+    query: createCreditAccountInfo,
     variables: {
       input: {
-        email: event.request.userAttributes.email,
-        profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
-        walletAccount: `${event.userName}`,
-        creditAccount: `${event.userName}`,
-        name: `${event.userName}`,
-        surname: `${event.userName}`,
-        govId: `${event.userName}`,
-        address: `${event.userName}`,
-        contacts: `${event.userName}`,
-        netIncome: `${event.userName}`,
-        disIncome: `${event.userName}`,
-        localExpense: `${event.userName}`,
-        signDeclaration: `${event.userName}`
+        creditAccount: `6856546958`,
+        accountStatus: `ACTIVE`,
+        availableCredit: 50,
+        balanceOwing: 0,
+        creditLimit: 200,
+        minimumDue: 0,
+        dueDate: `2024-07-08`,
+        monthsPaid: `June`,
+        monthsDefault: ``
       },
     },
   });
+
+  await client.graphql({
+      query: createUserProfile,
+      variables: {
+        input: {
+          email: event.request.userAttributes.email,
+          profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
+          walletAccount: ``,
+          creditAccount: ``,
+          name: ``,
+          surname: ``,
+          govId: ``,
+          address: ``,
+          contacts: ``,
+          netIncome: ``,
+          disIncome: ``,
+          localExpense: ``,
+          signDeclaration: ``
+        },
+      },
+    });
 
   return event;
 };
