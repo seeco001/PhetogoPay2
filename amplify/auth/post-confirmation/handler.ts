@@ -39,33 +39,12 @@ const client = generateClient<Schema>({
 });
 
 export const handler: PostConfirmationTriggerHandler = async (event) => {
-  const creditAccountInfoResponse = await client.graphql({
-    query: createCreditAccountInfo,
-    variables: {
-      input: {
-        creditAccount: `6856546958`,
-        accountStatus: `ACTIVE`,
-        availableCredit: 50,
-        balanceOwing: 0,
-        creditLimit: 200,
-        minimumDue: 0,
-        dueDate: `2024-07-08`,
-        monthsPaid: `June`,
-        monthsDefault: ``
-      },
-    },
-  });
-
-  const creditAccountId = creditAccountInfoResponse.data.createCreditAccountInfo.id
-
-  await client.graphql({
+  const userProfile = await client.graphql({
       query: createUserProfile,
       variables: {
         input: {
           email: event.request.userAttributes.email,
           profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
-          walletAccount: ``,
-          creditAccount: creditAccountId,
           name: ``,
           surname: ``,
           govId: ``,
@@ -78,6 +57,25 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
         },
       },
     });
+
+
+  await client.graphql({
+    query: createCreditAccountInfo,
+    variables: {
+      input: {
+        creditAccount: `6856546958`,
+        accountStatus: `ACTIVE`,
+        availableCredit: 50,
+        balanceOwing: 0,
+        creditLimit: 200,
+        minimumDue: 0,
+        dueDate: `2024-07-08`,
+        monthsPaid: `June`,
+        monthsDefault: ``,
+        userProfile: userProfile.data.createUserProfile
+      },
+    },
+  });
 
   return event;
 };

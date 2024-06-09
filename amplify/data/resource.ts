@@ -5,23 +5,23 @@ import { postConfirmation } from "../auth/post-confirmation/resource";
 const schema = a
     .schema({
 
-        CreditTransaction: a
-            .model({
-                profileId: a.id(),
-                fromAccount: a.string(),
-                transType: a.string(),
-                providerName: a.string(),
-                providerType: a.string(),
-                amount: a.string(),
-                userProfiles: a.belongsTo('UserProfile','profileId')
-            })
-            .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
-            ]),
+//         CreditTransaction: a
+//             .model({
+//                 profileId: a.id(),
+//                 fromAccount: a.string(),
+//                 transType: a.string(),
+//                 providerName: a.string(),
+//                 providerType: a.string(),
+//                 amount: a.string(),
+//                 activeProfile: a.belongsTo('UserProfile','profileId')
+//             })
+//             .authorization((allow) => [
+//                 allow.ownerDefinedIn("profileOwner"),
+//             ]),
 
         CreditAccountInfo: a
             .model({
-                profileId: a.id(),
+                creditAccountId: a.id(),
                 creditAccount: a.string(),
                 accountStatus: a.string(),
                 availableCredit: a.integer(),
@@ -31,7 +31,7 @@ const schema = a
                 dueDate: a.string(),
                 monthsPaid: a.string(),
                 monthsDefault: a.string(),
-                userProfiles: a.belongsTo('UserProfile','profileId')
+                userProfile: a.belongsTo('UserProfile','creditAccountId')
             })
             .authorization((allow) => [
                 allow.ownerDefinedIn("profileOwner"),
@@ -41,8 +41,6 @@ const schema = a
             .model({
                 email: a.string(),
                 profileOwner: a.string(),
-                walletAccount: a.string(),
-                creditAccount: a.string(),
                 name: a.string(),
                 surname: a.string(),
                 govId: a.string(),
@@ -52,8 +50,8 @@ const schema = a
                 disIncome: a.string(),
                 localExpense: a.string(),
                 signDeclaration: a.string(),
-                creditTransaction: a.hasMany('CreditTransaction','profileId'),
-                creditAccountInfo: a.hasOne('CreditAccountInfo','profileId')
+                //creditTransaction: a.hasMany('CreditTransaction','profileId'),
+                activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId')
             })
             .authorization((allow) => [
                 allow.ownerDefinedIn("profileOwner"),
