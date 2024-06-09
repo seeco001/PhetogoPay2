@@ -63,7 +63,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
     query: createCreditAccountInfo,
     variables: {
       input: {
-        creditAccount: `6856546958`,
+        creditAccount: `6856546957`,
         accountStatus: `ACTIVE`,
         availableCredit: 50,
         balanceOwing: 0,
