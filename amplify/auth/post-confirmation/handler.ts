@@ -71,8 +71,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
         minimumDue: 0,
         dueDate: `2024-07-08`,
         monthsPaid: `June`,
-        monthsDefault: ``,
-        userProfile: userProfile.data.createUserProfile
+        monthsDefault: ``
       },
     },
   });
