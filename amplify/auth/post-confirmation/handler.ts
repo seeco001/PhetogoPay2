@@ -69,7 +69,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
         balanceOwing: 0,
         creditLimit: 200,
         minimumDue: 0,
-        dueDate: `2024-07-08`,
+        dueDate: `2024-07-09`,
         monthsPaid: `June`,
         monthsDefault: ``
       },
