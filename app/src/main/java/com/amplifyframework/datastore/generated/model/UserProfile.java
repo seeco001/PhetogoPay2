@@ -1,7 +1,5 @@
 package com.amplifyframework.datastore.generated.model;
 
-import com.amplifyframework.core.model.annotations.HasMany;
-import com.amplifyframework.core.model.ModelList;
 import com.amplifyframework.core.model.annotations.HasOne;
 import com.amplifyframework.core.model.ModelReference;
 import com.amplifyframework.core.model.LoadedModelReferenceImpl;
@@ -35,8 +33,6 @@ public final class UserProfile implements Model {
   public static final QueryField ID = field("UserProfile", "id");
   public static final QueryField EMAIL = field("UserProfile", "email");
   public static final QueryField PROFILE_OWNER = field("UserProfile", "profileOwner");
-  public static final QueryField WALLET_ACCOUNT = field("UserProfile", "walletAccount");
-  public static final QueryField CREDIT_ACCOUNT = field("UserProfile", "creditAccount");
   public static final QueryField NAME = field("UserProfile", "name");
   public static final QueryField SURNAME = field("UserProfile", "surname");
   public static final QueryField GOV_ID = field("UserProfile", "govId");
@@ -49,8 +45,6 @@ public final class UserProfile implements Model {
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String email;
   private final @ModelField(targetType="String") String profileOwner;
-  private final @ModelField(targetType="String") String walletAccount;
-  private final @ModelField(targetType="String") String creditAccount;
   private final @ModelField(targetType="String") String name;
   private final @ModelField(targetType="String") String surname;
   private final @ModelField(targetType="String") String govId;
@@ -60,8 +54,7 @@ public final class UserProfile implements Model {
   private final @ModelField(targetType="String") String disIncome;
   private final @ModelField(targetType="String") String localExpense;
   private final @ModelField(targetType="String") String signDeclaration;
-  private final @ModelField(targetType="CreditTransaction") @HasMany(associatedWith = "userProfiles", type = CreditTransaction.class) ModelList<CreditTransaction> creditTransaction = null;
-  private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfiles", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> creditAccountInfo = null;
+  private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfile", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> activeCreditAccountInfo = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -80,14 +73,6 @@ public final class UserProfile implements Model {
   
   public String getProfileOwner() {
       return profileOwner;
-  }
-  
-  public String getWalletAccount() {
-      return walletAccount;
-  }
-  
-  public String getCreditAccount() {
-      return creditAccount;
   }
   
   public String getName() {
@@ -126,12 +111,8 @@ public final class UserProfile implements Model {
       return signDeclaration;
   }
   
-  public ModelList<CreditTransaction> getCreditTransaction() {
-      return creditTransaction;
-  }
-  
-  public ModelReference<CreditAccountInfo> getCreditAccountInfo() {
-      return creditAccountInfo;
+  public ModelReference<CreditAccountInfo> getActiveCreditAccountInfo() {
+      return activeCreditAccountInfo;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -142,12 +123,10 @@ public final class UserProfile implements Model {
       return updatedAt;
   }
   
-  private UserProfile(String id, String email, String profileOwner, String walletAccount, String creditAccount, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+  private UserProfile(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
     this.id = id;
     this.email = email;
     this.profileOwner = profileOwner;
-    this.walletAccount = walletAccount;
-    this.creditAccount = creditAccount;
     this.name = name;
     this.surname = surname;
     this.govId = govId;
@@ -170,8 +149,6 @@ public final class UserProfile implements Model {
       return ObjectsCompat.equals(getId(), userProfile.getId()) &&
               ObjectsCompat.equals(getEmail(), userProfile.getEmail()) &&
               ObjectsCompat.equals(getProfileOwner(), userProfile.getProfileOwner()) &&
-              ObjectsCompat.equals(getWalletAccount(), userProfile.getWalletAccount()) &&
-              ObjectsCompat.equals(getCreditAccount(), userProfile.getCreditAccount()) &&
               ObjectsCompat.equals(getName(), userProfile.getName()) &&
               ObjectsCompat.equals(getSurname(), userProfile.getSurname()) &&
               ObjectsCompat.equals(getGovId(), userProfile.getGovId()) &&
@@ -192,8 +169,6 @@ public final class UserProfile implements Model {
       .append(getId())
       .append(getEmail())
       .append(getProfileOwner())
-      .append(getWalletAccount())
-      .append(getCreditAccount())
       .append(getName())
       .append(getSurname())
       .append(getGovId())
@@ -216,8 +191,6 @@ public final class UserProfile implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("email=" + String.valueOf(getEmail()) + ", ")
       .append("profileOwner=" + String.valueOf(getProfileOwner()) + ", ")
-      .append("walletAccount=" + String.valueOf(getWalletAccount()) + ", ")
-      .append("creditAccount=" + String.valueOf(getCreditAccount()) + ", ")
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("surname=" + String.valueOf(getSurname()) + ", ")
       .append("govId=" + String.valueOf(getGovId()) + ", ")
@@ -258,8 +231,6 @@ public final class UserProfile implements Model {
       null,
       null,
       null,
-      null,
-      null,
       null
     );
   }
@@ -268,8 +239,6 @@ public final class UserProfile implements Model {
     return new CopyOfBuilder(id,
       email,
       profileOwner,
-      walletAccount,
-      creditAccount,
       name,
       surname,
       govId,
@@ -285,8 +254,6 @@ public final class UserProfile implements Model {
     BuildStep id(String id);
     BuildStep email(String email);
     BuildStep profileOwner(String profileOwner);
-    BuildStep walletAccount(String walletAccount);
-    BuildStep creditAccount(String creditAccount);
     BuildStep name(String name);
     BuildStep surname(String surname);
     BuildStep govId(String govId);
@@ -303,8 +270,6 @@ public final class UserProfile implements Model {
     private String id;
     private String email;
     private String profileOwner;
-    private String walletAccount;
-    private String creditAccount;
     private String name;
     private String surname;
     private String govId;
@@ -318,12 +283,10 @@ public final class UserProfile implements Model {
       
     }
     
-    private Builder(String id, String email, String profileOwner, String walletAccount, String creditAccount, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+    private Builder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
       this.id = id;
       this.email = email;
       this.profileOwner = profileOwner;
-      this.walletAccount = walletAccount;
-      this.creditAccount = creditAccount;
       this.name = name;
       this.surname = surname;
       this.govId = govId;
@@ -343,8 +306,6 @@ public final class UserProfile implements Model {
           id,
           email,
           profileOwner,
-          walletAccount,
-          creditAccount,
           name,
           surname,
           govId,
@@ -365,18 +326,6 @@ public final class UserProfile implements Model {
     @Override
      public BuildStep profileOwner(String profileOwner) {
         this.profileOwner = profileOwner;
-        return this;
-    }
-    
-    @Override
-     public BuildStep walletAccount(String walletAccount) {
-        this.walletAccount = walletAccount;
-        return this;
-    }
-    
-    @Override
-     public BuildStep creditAccount(String creditAccount) {
-        this.creditAccount = creditAccount;
         return this;
     }
     
@@ -446,8 +395,8 @@ public final class UserProfile implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String email, String profileOwner, String walletAccount, String creditAccount, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
-      super(id, email, profileOwner, walletAccount, creditAccount, name, surname, govId, address, contacts, netIncome, disIncome, localExpense, signDeclaration);
+    private CopyOfBuilder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+      super(id, email, profileOwner, name, surname, govId, address, contacts, netIncome, disIncome, localExpense, signDeclaration);
       
     }
     
@@ -459,16 +408,6 @@ public final class UserProfile implements Model {
     @Override
      public CopyOfBuilder profileOwner(String profileOwner) {
       return (CopyOfBuilder) super.profileOwner(profileOwner);
-    }
-    
-    @Override
-     public CopyOfBuilder walletAccount(String walletAccount) {
-      return (CopyOfBuilder) super.walletAccount(walletAccount);
-    }
-    
-    @Override
-     public CopyOfBuilder creditAccount(String creditAccount) {
-      return (CopyOfBuilder) super.creditAccount(creditAccount);
     }
     
     @Override

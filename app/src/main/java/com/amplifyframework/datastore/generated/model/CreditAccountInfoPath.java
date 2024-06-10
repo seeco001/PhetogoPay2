@@ -8,15 +8,15 @@ import com.amplifyframework.core.model.PropertyPath;
 
 /** This is an auto generated class representing the ModelPath for the CreditAccountInfo type in your schema. */
 public final class CreditAccountInfoPath extends ModelPath<CreditAccountInfo> {
-  private UserProfilePath userProfiles;
+  private UserProfilePath userProfile;
   CreditAccountInfoPath(@NonNull String name, @NonNull Boolean isCollection, @Nullable PropertyPath parent) {
     super(name, isCollection, parent, CreditAccountInfo.class);
   }
   
-  public synchronized UserProfilePath getUserProfiles() {
-    if (userProfiles == null) {
-      userProfiles = new UserProfilePath("userProfiles", false, this);
+  public synchronized UserProfilePath getUserProfile() {
+    if (userProfile == null) {
+      userProfile = new UserProfilePath("userProfile", false, this);
     }
-    return userProfiles;
+    return userProfile;
   }
 }

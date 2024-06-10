@@ -40,7 +40,7 @@ public final class CreditAccountInfo implements Model {
   public static final QueryField DUE_DATE = field("CreditAccountInfo", "dueDate");
   public static final QueryField MONTHS_PAID = field("CreditAccountInfo", "monthsPaid");
   public static final QueryField MONTHS_DEFAULT = field("CreditAccountInfo", "monthsDefault");
-  public static final QueryField USER_PROFILES = field("CreditAccountInfo", "profileId");
+  public static final QueryField USER_PROFILE = field("CreditAccountInfo", "creditAccountId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String creditAccount;
   private final @ModelField(targetType="String") String accountStatus;
@@ -51,7 +51,7 @@ public final class CreditAccountInfo implements Model {
   private final @ModelField(targetType="String") String dueDate;
   private final @ModelField(targetType="String") String monthsPaid;
   private final @ModelField(targetType="String") String monthsDefault;
-  private final @ModelField(targetType="UserProfile") @BelongsTo(targetName = "profileId", targetNames = {"profileId"}, type = UserProfile.class) ModelReference<UserProfile> userProfiles;
+  private final @ModelField(targetType="UserProfile") @BelongsTo(targetName = "creditAccountId", targetNames = {"creditAccountId"}, type = UserProfile.class) ModelReference<UserProfile> userProfile;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -100,8 +100,8 @@ public final class CreditAccountInfo implements Model {
       return monthsDefault;
   }
   
-  public ModelReference<UserProfile> getUserProfiles() {
-      return userProfiles;
+  public ModelReference<UserProfile> getUserProfile() {
+      return userProfile;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -112,7 +112,7 @@ public final class CreditAccountInfo implements Model {
       return updatedAt;
   }
   
-  private CreditAccountInfo(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfiles) {
+  private CreditAccountInfo(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfile) {
     this.id = id;
     this.creditAccount = creditAccount;
     this.accountStatus = accountStatus;
@@ -123,7 +123,7 @@ public final class CreditAccountInfo implements Model {
     this.dueDate = dueDate;
     this.monthsPaid = monthsPaid;
     this.monthsDefault = monthsDefault;
-    this.userProfiles = userProfiles;
+    this.userProfile = userProfile;
   }
   
   @Override
@@ -144,7 +144,7 @@ public final class CreditAccountInfo implements Model {
               ObjectsCompat.equals(getDueDate(), creditAccountInfo.getDueDate()) &&
               ObjectsCompat.equals(getMonthsPaid(), creditAccountInfo.getMonthsPaid()) &&
               ObjectsCompat.equals(getMonthsDefault(), creditAccountInfo.getMonthsDefault()) &&
-              ObjectsCompat.equals(getUserProfiles(), creditAccountInfo.getUserProfiles()) &&
+              ObjectsCompat.equals(getUserProfile(), creditAccountInfo.getUserProfile()) &&
               ObjectsCompat.equals(getCreatedAt(), creditAccountInfo.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), creditAccountInfo.getUpdatedAt());
       }
@@ -163,7 +163,7 @@ public final class CreditAccountInfo implements Model {
       .append(getDueDate())
       .append(getMonthsPaid())
       .append(getMonthsDefault())
-      .append(getUserProfiles())
+      .append(getUserProfile())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -184,7 +184,7 @@ public final class CreditAccountInfo implements Model {
       .append("dueDate=" + String.valueOf(getDueDate()) + ", ")
       .append("monthsPaid=" + String.valueOf(getMonthsPaid()) + ", ")
       .append("monthsDefault=" + String.valueOf(getMonthsDefault()) + ", ")
-      .append("userProfiles=" + String.valueOf(getUserProfiles()) + ", ")
+      .append("userProfile=" + String.valueOf(getUserProfile()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -230,7 +230,7 @@ public final class CreditAccountInfo implements Model {
       dueDate,
       monthsPaid,
       monthsDefault,
-      userProfiles);
+      userProfile);
   }
   public interface BuildStep {
     CreditAccountInfo build();
@@ -244,7 +244,7 @@ public final class CreditAccountInfo implements Model {
     BuildStep dueDate(String dueDate);
     BuildStep monthsPaid(String monthsPaid);
     BuildStep monthsDefault(String monthsDefault);
-    BuildStep userProfiles(UserProfile userProfiles);
+    BuildStep userProfile(UserProfile userProfile);
   }
   
 
@@ -259,12 +259,12 @@ public final class CreditAccountInfo implements Model {
     private String dueDate;
     private String monthsPaid;
     private String monthsDefault;
-    private ModelReference<UserProfile> userProfiles;
+    private ModelReference<UserProfile> userProfile;
     public Builder() {
       
     }
     
-    private Builder(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfiles) {
+    private Builder(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfile) {
       this.id = id;
       this.creditAccount = creditAccount;
       this.accountStatus = accountStatus;
@@ -275,7 +275,7 @@ public final class CreditAccountInfo implements Model {
       this.dueDate = dueDate;
       this.monthsPaid = monthsPaid;
       this.monthsDefault = monthsDefault;
-      this.userProfiles = userProfiles;
+      this.userProfile = userProfile;
     }
     
     @Override
@@ -293,7 +293,7 @@ public final class CreditAccountInfo implements Model {
           dueDate,
           monthsPaid,
           monthsDefault,
-          userProfiles);
+          userProfile);
     }
     
     @Override
@@ -351,8 +351,8 @@ public final class CreditAccountInfo implements Model {
     }
     
     @Override
-     public BuildStep userProfiles(UserProfile userProfiles) {
-        this.userProfiles = new LoadedModelReferenceImpl<>(userProfiles);
+     public BuildStep userProfile(UserProfile userProfile) {
+        this.userProfile = new LoadedModelReferenceImpl<>(userProfile);
         return this;
     }
     
@@ -368,8 +368,8 @@ public final class CreditAccountInfo implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfiles) {
-      super(id, creditAccount, accountStatus, availableCredit, balanceOwing, creditLimit, minimumDue, dueDate, monthsPaid, monthsDefault, userProfiles);
+    private CopyOfBuilder(String id, String creditAccount, String accountStatus, Integer availableCredit, Integer balanceOwing, Integer creditLimit, Integer minimumDue, String dueDate, String monthsPaid, String monthsDefault, ModelReference<UserProfile> userProfile) {
+      super(id, creditAccount, accountStatus, availableCredit, balanceOwing, creditLimit, minimumDue, dueDate, monthsPaid, monthsDefault, userProfile);
       
     }
     
@@ -419,8 +419,8 @@ public final class CreditAccountInfo implements Model {
     }
     
     @Override
-     public CopyOfBuilder userProfiles(UserProfile userProfiles) {
-      return (CopyOfBuilder) super.userProfiles(userProfiles);
+     public CopyOfBuilder userProfile(UserProfile userProfile) {
+      return (CopyOfBuilder) super.userProfile(userProfile);
     }
   }
   
