@@ -1,5 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
+import com.amplifyframework.core.model.ModelList;
 import com.amplifyframework.core.model.annotations.HasOne;
 import com.amplifyframework.core.model.ModelReference;
 import com.amplifyframework.core.model.LoadedModelReferenceImpl;
@@ -54,7 +56,10 @@ public final class UserProfile implements Model {
   private final @ModelField(targetType="String") String disIncome;
   private final @ModelField(targetType="String") String localExpense;
   private final @ModelField(targetType="String") String signDeclaration;
+  private final @ModelField(targetType="CreditTransaction") @HasMany(associatedWith = "activeProfile", type = CreditTransaction.class) ModelList<CreditTransaction> creditTransaction = null;
   private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfile", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> activeCreditAccountInfo = null;
+  private final @ModelField(targetType="WalletTransaction") @HasMany(associatedWith = "activeProfile", type = WalletTransaction.class) ModelList<WalletTransaction> walletTransaction = null;
+  private final @ModelField(targetType="WalletAccountInfo") @HasOne(associatedWith = "userProfile", type = WalletAccountInfo.class) ModelReference<WalletAccountInfo> activeWalletAccountInfo = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -111,8 +116,20 @@ public final class UserProfile implements Model {
       return signDeclaration;
   }
   
+  public ModelList<CreditTransaction> getCreditTransaction() {
+      return creditTransaction;
+  }
+  
   public ModelReference<CreditAccountInfo> getActiveCreditAccountInfo() {
       return activeCreditAccountInfo;
+  }
+  
+  public ModelList<WalletTransaction> getWalletTransaction() {
+      return walletTransaction;
+  }
+  
+  public ModelReference<WalletAccountInfo> getActiveWalletAccountInfo() {
+      return activeWalletAccountInfo;
   }
   
   public Temporal.DateTime getCreatedAt() {

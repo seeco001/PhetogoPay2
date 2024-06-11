@@ -23,27 +23,27 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the CreditTransaction type in your schema. */
+/** This is an auto generated class representing the WalletTransaction type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "CreditTransactions", type = Model.Type.USER, version = 1, authRules = {
+@ModelConfig(pluralName = "WalletTransactions", type = Model.Type.USER, version = 1, authRules = {
   @AuthRule(allow = AuthStrategy.OWNER, ownerField = "profileOwner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 }, hasLazySupport = true)
-public final class CreditTransaction implements Model {
-  public static final CreditTransactionPath rootPath = new CreditTransactionPath("root", false, null);
-  public static final QueryField ID = field("CreditTransaction", "id");
-  public static final QueryField FROM_ACCOUNT = field("CreditTransaction", "fromAccount");
-  public static final QueryField TRANS_TYPE = field("CreditTransaction", "transType");
-  public static final QueryField PROVIDER_NAME = field("CreditTransaction", "providerName");
-  public static final QueryField PROVIDER_TYPE = field("CreditTransaction", "providerType");
-  public static final QueryField AMOUNT = field("CreditTransaction", "amount");
-  public static final QueryField ACTIVE_PROFILE = field("CreditTransaction", "creditTransactionId");
+public final class WalletTransaction implements Model {
+  public static final WalletTransactionPath rootPath = new WalletTransactionPath("root", false, null);
+  public static final QueryField ID = field("WalletTransaction", "id");
+  public static final QueryField FROM_ACCOUNT = field("WalletTransaction", "fromAccount");
+  public static final QueryField TRANS_TYPE = field("WalletTransaction", "transType");
+  public static final QueryField PROVIDER_NAME = field("WalletTransaction", "providerName");
+  public static final QueryField PROVIDER_TYPE = field("WalletTransaction", "providerType");
+  public static final QueryField AMOUNT = field("WalletTransaction", "amount");
+  public static final QueryField ACTIVE_PROFILE = field("WalletTransaction", "walletTransactionId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String fromAccount;
   private final @ModelField(targetType="String") String transType;
   private final @ModelField(targetType="String") String providerName;
   private final @ModelField(targetType="String") String providerType;
   private final @ModelField(targetType="String") String amount;
-  private final @ModelField(targetType="UserProfile") @BelongsTo(targetName = "creditTransactionId", targetNames = {"creditTransactionId"}, type = UserProfile.class) ModelReference<UserProfile> activeProfile;
+  private final @ModelField(targetType="UserProfile") @BelongsTo(targetName = "walletTransactionId", targetNames = {"walletTransactionId"}, type = UserProfile.class) ModelReference<UserProfile> activeProfile;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -88,7 +88,7 @@ public final class CreditTransaction implements Model {
       return updatedAt;
   }
   
-  private CreditTransaction(String id, String fromAccount, String transType, String providerName, String providerType, String amount, ModelReference<UserProfile> activeProfile) {
+  private WalletTransaction(String id, String fromAccount, String transType, String providerName, String providerType, String amount, ModelReference<UserProfile> activeProfile) {
     this.id = id;
     this.fromAccount = fromAccount;
     this.transType = transType;
@@ -105,16 +105,16 @@ public final class CreditTransaction implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      CreditTransaction creditTransaction = (CreditTransaction) obj;
-      return ObjectsCompat.equals(getId(), creditTransaction.getId()) &&
-              ObjectsCompat.equals(getFromAccount(), creditTransaction.getFromAccount()) &&
-              ObjectsCompat.equals(getTransType(), creditTransaction.getTransType()) &&
-              ObjectsCompat.equals(getProviderName(), creditTransaction.getProviderName()) &&
-              ObjectsCompat.equals(getProviderType(), creditTransaction.getProviderType()) &&
-              ObjectsCompat.equals(getAmount(), creditTransaction.getAmount()) &&
-              ObjectsCompat.equals(getActiveProfile(), creditTransaction.getActiveProfile()) &&
-              ObjectsCompat.equals(getCreatedAt(), creditTransaction.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), creditTransaction.getUpdatedAt());
+      WalletTransaction walletTransaction = (WalletTransaction) obj;
+      return ObjectsCompat.equals(getId(), walletTransaction.getId()) &&
+              ObjectsCompat.equals(getFromAccount(), walletTransaction.getFromAccount()) &&
+              ObjectsCompat.equals(getTransType(), walletTransaction.getTransType()) &&
+              ObjectsCompat.equals(getProviderName(), walletTransaction.getProviderName()) &&
+              ObjectsCompat.equals(getProviderType(), walletTransaction.getProviderType()) &&
+              ObjectsCompat.equals(getAmount(), walletTransaction.getAmount()) &&
+              ObjectsCompat.equals(getActiveProfile(), walletTransaction.getActiveProfile()) &&
+              ObjectsCompat.equals(getCreatedAt(), walletTransaction.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), walletTransaction.getUpdatedAt());
       }
   }
   
@@ -137,7 +137,7 @@ public final class CreditTransaction implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("CreditTransaction {")
+      .append("WalletTransaction {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("fromAccount=" + String.valueOf(getFromAccount()) + ", ")
       .append("transType=" + String.valueOf(getTransType()) + ", ")
@@ -163,8 +163,8 @@ public final class CreditTransaction implements Model {
    * @param id the id of the existing item this instance will represent
    * @return an instance of this model with only ID populated
    */
-  public static CreditTransaction justId(String id) {
-    return new CreditTransaction(
+  public static WalletTransaction justId(String id) {
+    return new WalletTransaction(
       id,
       null,
       null,
@@ -185,7 +185,7 @@ public final class CreditTransaction implements Model {
       activeProfile);
   }
   public interface BuildStep {
-    CreditTransaction build();
+    WalletTransaction build();
     BuildStep id(String id);
     BuildStep fromAccount(String fromAccount);
     BuildStep transType(String transType);
@@ -219,10 +219,10 @@ public final class CreditTransaction implements Model {
     }
     
     @Override
-     public CreditTransaction build() {
+     public WalletTransaction build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new CreditTransaction(
+        return new WalletTransaction(
           id,
           fromAccount,
           transType,
@@ -317,9 +317,9 @@ public final class CreditTransaction implements Model {
   }
   
 
-  public static class CreditTransactionIdentifier extends ModelIdentifier<CreditTransaction> {
+  public static class WalletTransactionIdentifier extends ModelIdentifier<WalletTransaction> {
     private static final long serialVersionUID = 1L;
-    public CreditTransactionIdentifier(String id) {
+    public WalletTransactionIdentifier(String id) {
       super(id);
     }
   }

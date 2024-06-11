@@ -6,11 +6,11 @@ import androidx.annotation.Nullable;
 import com.amplifyframework.core.model.ModelPath;
 import com.amplifyframework.core.model.PropertyPath;
 
-/** This is an auto generated class representing the ModelPath for the CreditTransaction type in your schema. */
-public final class CreditTransactionPath extends ModelPath<CreditTransaction> {
+/** This is an auto generated class representing the ModelPath for the WalletTransaction type in your schema. */
+public final class WalletTransactionPath extends ModelPath<WalletTransaction> {
   private UserProfilePath activeProfile;
-  CreditTransactionPath(@NonNull String name, @NonNull Boolean isCollection, @Nullable PropertyPath parent) {
-    super(name, isCollection, parent, CreditTransaction.class);
+  WalletTransactionPath(@NonNull String name, @NonNull Boolean isCollection, @Nullable PropertyPath parent) {
+    super(name, isCollection, parent, WalletTransaction.class);
   }
   
   public synchronized UserProfilePath getActiveProfile() {
