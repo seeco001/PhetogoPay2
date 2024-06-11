@@ -5,19 +5,45 @@ import { postConfirmation } from "../auth/post-confirmation/resource";
 const schema = a
     .schema({
 
-//         CreditTransaction: a
-//             .model({
-//                 profileId: a.id(),
-//                 fromAccount: a.string(),
-//                 transType: a.string(),
-//                 providerName: a.string(),
-//                 providerType: a.string(),
-//                 amount: a.string(),
-//                 activeProfile: a.belongsTo('UserProfile','profileId')
-//             })
-//             .authorization((allow) => [
-//                 allow.ownerDefinedIn("profileOwner"),
-//             ]),
+        WalletTransaction: a
+            .model({
+                walletTransactionId: a.id(),
+                fromAccount: a.string(),
+                transType: a.string(),
+                providerName: a.string(),
+                providerType: a.string(),
+                amount: a.string(),
+                activeProfile: a.belongsTo('UserProfile','walletTransactionId')
+            })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
+
+        CreditTransaction: a
+            .model({
+                creditTransactionId: a.id(),
+                fromAccount: a.string(),
+                transType: a.string(),
+                providerName: a.string(),
+                providerType: a.string(),
+                amount: a.string(),
+                activeProfile: a.belongsTo('UserProfile','creditTransactionId')
+            })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
+
+        WalletAccountInfo: a
+            .model({
+                walletAccountId: a.id(),
+                creditAccount: a.string(),
+                accountStatus: a.string(),
+                availableBalance: a.integer(),
+                userProfile: a.belongsTo('UserProfile','walletAccountId')
+            })
+            .authorization((allow) => [
+                allow.ownerDefinedIn("profileOwner"),
+            ]),
 
         CreditAccountInfo: a
             .model({
@@ -50,8 +76,10 @@ const schema = a
                 disIncome: a.string(),
                 localExpense: a.string(),
                 signDeclaration: a.string(),
-                //creditTransaction: a.hasMany('CreditTransaction','profileId'),
-                activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId')
+                creditTransaction: a.hasMany('CreditTransaction','creditTransactionId'),
+                activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId'),
+                walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),
+                activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
             })
             .authorization((allow) => [
                 allow.ownerDefinedIn("profileOwner"),
