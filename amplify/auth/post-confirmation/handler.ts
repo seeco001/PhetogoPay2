@@ -51,24 +51,24 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
       },
     });
 
-  await client.graphql({
-      query: createUserProfile,
-      variables: {
-        input: {
-          email: event.request.userAttributes.email,
-          profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
-          name: ``,
-          surname: ``,
-          govId: ``,
-          address: ``,
-          contacts: ``,
-          netIncome: ``,
-          disIncome: ``,
-          localExpense: ``,
-          signDeclaration: ``
-        },
-      },
-    });
+//   await client.graphql({
+//       query: createUserProfile,
+//       variables: {
+//         input: {
+//           email: event.request.userAttributes.email,
+//           profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
+//           name: ``,
+//           surname: ``,
+//           govId: ``,
+//           address: ``,
+//           contacts: ``,
+//           netIncome: ``,
+//           disIncome: ``,
+//           localExpense: ``,
+//           signDeclaration: ``
+//         },
+//       },
+//     });
 
   return event;
 };

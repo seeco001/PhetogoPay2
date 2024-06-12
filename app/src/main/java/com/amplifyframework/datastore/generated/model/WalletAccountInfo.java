@@ -31,12 +31,14 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class WalletAccountInfo implements Model {
   public static final WalletAccountInfoPath rootPath = new WalletAccountInfoPath("root", false, null);
   public static final QueryField ID = field("WalletAccountInfo", "id");
-  public static final QueryField CREDIT_ACCOUNT = field("WalletAccountInfo", "creditAccount");
+  public static final QueryField PROFILE_OWNER = field("WalletAccountInfo", "profileOwner");
+  public static final QueryField WALLET_ACCOUNT = field("WalletAccountInfo", "walletAccount");
   public static final QueryField ACCOUNT_STATUS = field("WalletAccountInfo", "accountStatus");
   public static final QueryField AVAILABLE_BALANCE = field("WalletAccountInfo", "availableBalance");
   public static final QueryField USER_PROFILE = field("WalletAccountInfo", "walletAccountId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String") String creditAccount;
+  private final @ModelField(targetType="String") String profileOwner;
+  private final @ModelField(targetType="String") String walletAccount;
   private final @ModelField(targetType="String") String accountStatus;
   private final @ModelField(targetType="Int") Integer availableBalance;
   private final @ModelField(targetType="UserProfile") @BelongsTo(targetName = "walletAccountId", targetNames = {"walletAccountId"}, type = UserProfile.class) ModelReference<UserProfile> userProfile;
@@ -52,8 +54,12 @@ public final class WalletAccountInfo implements Model {
       return id;
   }
   
-  public String getCreditAccount() {
-      return creditAccount;
+  public String getProfileOwner() {
+      return profileOwner;
+  }
+  
+  public String getWalletAccount() {
+      return walletAccount;
   }
   
   public String getAccountStatus() {
@@ -76,9 +82,10 @@ public final class WalletAccountInfo implements Model {
       return updatedAt;
   }
   
-  private WalletAccountInfo(String id, String creditAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
+  private WalletAccountInfo(String id, String profileOwner, String walletAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
     this.id = id;
-    this.creditAccount = creditAccount;
+    this.profileOwner = profileOwner;
+    this.walletAccount = walletAccount;
     this.accountStatus = accountStatus;
     this.availableBalance = availableBalance;
     this.userProfile = userProfile;
@@ -93,7 +100,8 @@ public final class WalletAccountInfo implements Model {
       } else {
       WalletAccountInfo walletAccountInfo = (WalletAccountInfo) obj;
       return ObjectsCompat.equals(getId(), walletAccountInfo.getId()) &&
-              ObjectsCompat.equals(getCreditAccount(), walletAccountInfo.getCreditAccount()) &&
+              ObjectsCompat.equals(getProfileOwner(), walletAccountInfo.getProfileOwner()) &&
+              ObjectsCompat.equals(getWalletAccount(), walletAccountInfo.getWalletAccount()) &&
               ObjectsCompat.equals(getAccountStatus(), walletAccountInfo.getAccountStatus()) &&
               ObjectsCompat.equals(getAvailableBalance(), walletAccountInfo.getAvailableBalance()) &&
               ObjectsCompat.equals(getUserProfile(), walletAccountInfo.getUserProfile()) &&
@@ -106,7 +114,8 @@ public final class WalletAccountInfo implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getCreditAccount())
+      .append(getProfileOwner())
+      .append(getWalletAccount())
       .append(getAccountStatus())
       .append(getAvailableBalance())
       .append(getUserProfile())
@@ -121,7 +130,8 @@ public final class WalletAccountInfo implements Model {
     return new StringBuilder()
       .append("WalletAccountInfo {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("creditAccount=" + String.valueOf(getCreditAccount()) + ", ")
+      .append("profileOwner=" + String.valueOf(getProfileOwner()) + ", ")
+      .append("walletAccount=" + String.valueOf(getWalletAccount()) + ", ")
       .append("accountStatus=" + String.valueOf(getAccountStatus()) + ", ")
       .append("availableBalance=" + String.valueOf(getAvailableBalance()) + ", ")
       .append("userProfile=" + String.valueOf(getUserProfile()) + ", ")
@@ -149,13 +159,15 @@ public final class WalletAccountInfo implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      creditAccount,
+      profileOwner,
+      walletAccount,
       accountStatus,
       availableBalance,
       userProfile);
@@ -163,7 +175,8 @@ public final class WalletAccountInfo implements Model {
   public interface BuildStep {
     WalletAccountInfo build();
     BuildStep id(String id);
-    BuildStep creditAccount(String creditAccount);
+    BuildStep profileOwner(String profileOwner);
+    BuildStep walletAccount(String walletAccount);
     BuildStep accountStatus(String accountStatus);
     BuildStep availableBalance(Integer availableBalance);
     BuildStep userProfile(UserProfile userProfile);
@@ -172,7 +185,8 @@ public final class WalletAccountInfo implements Model {
 
   public static class Builder implements BuildStep {
     private String id;
-    private String creditAccount;
+    private String profileOwner;
+    private String walletAccount;
     private String accountStatus;
     private Integer availableBalance;
     private ModelReference<UserProfile> userProfile;
@@ -180,9 +194,10 @@ public final class WalletAccountInfo implements Model {
       
     }
     
-    private Builder(String id, String creditAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
+    private Builder(String id, String profileOwner, String walletAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
       this.id = id;
-      this.creditAccount = creditAccount;
+      this.profileOwner = profileOwner;
+      this.walletAccount = walletAccount;
       this.accountStatus = accountStatus;
       this.availableBalance = availableBalance;
       this.userProfile = userProfile;
@@ -194,15 +209,22 @@ public final class WalletAccountInfo implements Model {
         
         return new WalletAccountInfo(
           id,
-          creditAccount,
+          profileOwner,
+          walletAccount,
           accountStatus,
           availableBalance,
           userProfile);
     }
     
     @Override
-     public BuildStep creditAccount(String creditAccount) {
-        this.creditAccount = creditAccount;
+     public BuildStep profileOwner(String profileOwner) {
+        this.profileOwner = profileOwner;
+        return this;
+    }
+    
+    @Override
+     public BuildStep walletAccount(String walletAccount) {
+        this.walletAccount = walletAccount;
         return this;
     }
     
@@ -236,14 +258,19 @@ public final class WalletAccountInfo implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String creditAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
-      super(id, creditAccount, accountStatus, availableBalance, userProfile);
+    private CopyOfBuilder(String id, String profileOwner, String walletAccount, String accountStatus, Integer availableBalance, ModelReference<UserProfile> userProfile) {
+      super(id, profileOwner, walletAccount, accountStatus, availableBalance, userProfile);
       
     }
     
     @Override
-     public CopyOfBuilder creditAccount(String creditAccount) {
-      return (CopyOfBuilder) super.creditAccount(creditAccount);
+     public CopyOfBuilder profileOwner(String profileOwner) {
+      return (CopyOfBuilder) super.profileOwner(profileOwner);
+    }
+    
+    @Override
+     public CopyOfBuilder walletAccount(String walletAccount) {
+      return (CopyOfBuilder) super.walletAccount(walletAccount);
     }
     
     @Override
