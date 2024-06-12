@@ -44,7 +44,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
       variables: {
         input: {
           profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
-          creditAccount: `6856546957`,
+          walletAccount: `6856546957`,
           accountStatus: `ACTIVE`,
           availableBalance: 0,
         },
