@@ -35,8 +35,9 @@ const schema = a
 
         WalletAccountInfo: a
             .model({
+                profileOwner: a.string(),
                 walletAccountId: a.id(),
-                creditAccount: a.string(),
+                walletAccount: a.string(),
                 accountStatus: a.string(),
                 availableBalance: a.integer(),
                 userProfile: a.belongsTo('UserProfile','walletAccountId')

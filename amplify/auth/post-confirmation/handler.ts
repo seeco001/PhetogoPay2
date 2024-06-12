@@ -4,7 +4,7 @@ import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 import { env } from "$amplify/env/post-confirmation";
 import { createUserProfile } from "./graphql/mutations";
-import { createCreditAccountInfo } from "./graphql/mutations";
+import { createCreditAccountInfo, createWalletAccountInfo } from "./graphql/mutations";
 
 Amplify.configure(
   {
@@ -39,22 +39,17 @@ const client = generateClient<Schema>({
 });
 
 export const handler: PostConfirmationTriggerHandler = async (event) => {
-//   await client.graphql({
-//       query: createCreditAccountInfo,
-//       variables: {
-//         input: {
-//           creditAccount: `6856546957`,
-//           accountStatus: `ACTIVE`,
-//           availableCredit: 50,
-//           balanceOwing: 0,
-//           creditLimit: 200,
-//           minimumDue: 0,
-//           dueDate: `2024-07-09`,
-//           monthsPaid: `June`,
-//           monthsDefault: ``
-//         },
-//       },
-//     });
+  await client.graphql({
+      query: createWalletAccountInfo,
+      variables: {
+        input: {
+          profileOwner: `${event.request.userAttributes.sub}::${event.userName}`,
+          creditAccount: `6856546957`,
+          accountStatus: `ACTIVE`,
+          availableBalance: 0,
+        },
+      },
+    });
 
   await client.graphql({
       query: createUserProfile,
@@ -74,9 +69,6 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
         },
       },
     });
-
-
-
 
   return event;
 };
