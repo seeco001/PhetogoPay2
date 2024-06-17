@@ -26,7 +26,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the WalletTransaction type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "WalletTransactions", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "profileOwner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 }, hasLazySupport = true)
 public final class WalletTransaction implements Model {
   public static final WalletTransactionPath rootPath = new WalletTransactionPath("root", false, null);

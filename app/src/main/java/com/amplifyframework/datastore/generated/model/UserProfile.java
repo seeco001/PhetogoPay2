@@ -28,7 +28,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the UserProfile type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "UserProfiles", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "profileOwner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 }, hasLazySupport = true)
 public final class UserProfile implements Model {
   public static final UserProfilePath rootPath = new UserProfilePath("root", false, null);
@@ -52,10 +52,10 @@ public final class UserProfile implements Model {
   private final @ModelField(targetType="String") String govId;
   private final @ModelField(targetType="String") String address;
   private final @ModelField(targetType="String") String contacts;
-  private final @ModelField(targetType="String") String netIncome;
-  private final @ModelField(targetType="String") String disIncome;
+  private final @ModelField(targetType="Int") Integer netIncome;
+  private final @ModelField(targetType="Int") Integer disIncome;
   private final @ModelField(targetType="String") String localExpense;
-  private final @ModelField(targetType="String") String signDeclaration;
+  private final @ModelField(targetType="Boolean") Boolean signDeclaration;
   private final @ModelField(targetType="CreditTransaction") @HasMany(associatedWith = "activeProfile", type = CreditTransaction.class) ModelList<CreditTransaction> creditTransaction = null;
   private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfile", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> activeCreditAccountInfo = null;
   private final @ModelField(targetType="WalletTransaction") @HasMany(associatedWith = "activeProfile", type = WalletTransaction.class) ModelList<WalletTransaction> walletTransaction = null;
@@ -100,11 +100,11 @@ public final class UserProfile implements Model {
       return contacts;
   }
   
-  public String getNetIncome() {
+  public Integer getNetIncome() {
       return netIncome;
   }
   
-  public String getDisIncome() {
+  public Integer getDisIncome() {
       return disIncome;
   }
   
@@ -112,7 +112,7 @@ public final class UserProfile implements Model {
       return localExpense;
   }
   
-  public String getSignDeclaration() {
+  public Boolean getSignDeclaration() {
       return signDeclaration;
   }
   
@@ -140,7 +140,7 @@ public final class UserProfile implements Model {
       return updatedAt;
   }
   
-  private UserProfile(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+  private UserProfile(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
     this.id = id;
     this.email = email;
     this.profileOwner = profileOwner;
@@ -276,10 +276,10 @@ public final class UserProfile implements Model {
     BuildStep govId(String govId);
     BuildStep address(String address);
     BuildStep contacts(String contacts);
-    BuildStep netIncome(String netIncome);
-    BuildStep disIncome(String disIncome);
+    BuildStep netIncome(Integer netIncome);
+    BuildStep disIncome(Integer disIncome);
     BuildStep localExpense(String localExpense);
-    BuildStep signDeclaration(String signDeclaration);
+    BuildStep signDeclaration(Boolean signDeclaration);
   }
   
 
@@ -292,15 +292,15 @@ public final class UserProfile implements Model {
     private String govId;
     private String address;
     private String contacts;
-    private String netIncome;
-    private String disIncome;
+    private Integer netIncome;
+    private Integer disIncome;
     private String localExpense;
-    private String signDeclaration;
+    private Boolean signDeclaration;
     public Builder() {
       
     }
     
-    private Builder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+    private Builder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
       this.id = id;
       this.email = email;
       this.profileOwner = profileOwner;
@@ -377,13 +377,13 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public BuildStep netIncome(String netIncome) {
+     public BuildStep netIncome(Integer netIncome) {
         this.netIncome = netIncome;
         return this;
     }
     
     @Override
-     public BuildStep disIncome(String disIncome) {
+     public BuildStep disIncome(Integer disIncome) {
         this.disIncome = disIncome;
         return this;
     }
@@ -395,7 +395,7 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public BuildStep signDeclaration(String signDeclaration) {
+     public BuildStep signDeclaration(Boolean signDeclaration) {
         this.signDeclaration = signDeclaration;
         return this;
     }
@@ -412,7 +412,7 @@ public final class UserProfile implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, String netIncome, String disIncome, String localExpense, String signDeclaration) {
+    private CopyOfBuilder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
       super(id, email, profileOwner, name, surname, govId, address, contacts, netIncome, disIncome, localExpense, signDeclaration);
       
     }
@@ -453,12 +453,12 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public CopyOfBuilder netIncome(String netIncome) {
+     public CopyOfBuilder netIncome(Integer netIncome) {
       return (CopyOfBuilder) super.netIncome(netIncome);
     }
     
     @Override
-     public CopyOfBuilder disIncome(String disIncome) {
+     public CopyOfBuilder disIncome(Integer disIncome) {
       return (CopyOfBuilder) super.disIncome(disIncome);
     }
     
@@ -468,7 +468,7 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public CopyOfBuilder signDeclaration(String signDeclaration) {
+     public CopyOfBuilder signDeclaration(Boolean signDeclaration) {
       return (CopyOfBuilder) super.signDeclaration(signDeclaration);
     }
   }
