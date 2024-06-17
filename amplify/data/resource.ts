@@ -1,5 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-import { postConfirmation } from "../auth/post-confirmation/resource";
+
 
 
 const schema = a
@@ -14,10 +14,7 @@ const schema = a
                 providerType: a.string(),
                 amount: a.string(),
                 activeProfile: a.belongsTo('UserProfile','walletTransactionId')
-            })
-            .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
-            ]),
+            }),
 
         CreditTransaction: a
             .model({
@@ -28,23 +25,16 @@ const schema = a
                 providerType: a.string(),
                 amount: a.string(),
                 activeProfile: a.belongsTo('UserProfile','creditTransactionId')
-            })
-            .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
-            ]),
+            }),
 
         WalletAccountInfo: a
             .model({
-                profileOwner: a.string(),
                 walletAccountId: a.id(),
                 walletAccount: a.string(),
                 accountStatus: a.string(),
                 availableBalance: a.integer(),
                 userProfile: a.belongsTo('UserProfile','walletAccountId')
-            })
-            .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
-            ]),
+            }),
 
         CreditAccountInfo: a
             .model({
@@ -73,21 +63,17 @@ const schema = a
                 govId: a.string(),
                 address: a.string(),
                 contacts: a.string(),
-                netIncome: a.string(),
-                disIncome: a.string(),
+                netIncome: a.integer(),
+                disIncome: a.integer(),
                 localExpense: a.string(),
-                signDeclaration: a.string(),
+                signDeclaration: a.boolean(),
                 creditTransaction: a.hasMany('CreditTransaction','creditTransactionId'),
                 activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId'),
                 walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),
                 activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
-            })
-            .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
-            ]),
+            }),
+    }).authorization(allow => [allow.owner()]);
 
-    })
-    .authorization((allow) => [allow.resource(postConfirmation)]);
 export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
