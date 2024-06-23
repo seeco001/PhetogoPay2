@@ -1,20 +1,44 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-
+import { myDynamoDBFunction } from "../functions/dynamoDB-function/resource"
 
 
 const schema = a
     .schema({
+        /**
+            NewAccount is used to store IDs of new users when they want to open new accounts,
+            the user's ID is checked whether it exists to determine whether the user can
+            proceed with their application: When ID record exists users can't apply for credit.
 
-        WalletTransaction: a
+            sub checks whether the authenticated user has an accounts and this is used to update
+            the UI correctly.
+         */
+        NewAccounts: a
             .model({
-                walletTransactionId: a.id(),
-                fromAccount: a.string(),
-                transType: a.string(),
-                providerName: a.string(),
-                providerType: a.string(),
-                amount: a.string(),
-                activeProfile: a.belongsTo('UserProfile','walletTransactionId')
-            }),
+                govId: a.id(),
+                creditAccount: a.string(),
+                sub: a.string()
+            })
+            .authorization((allow) => [
+                allow.authenticated()
+                    .to(['read','create']),
+            ]),
+
+
+//         WalletTransaction: a
+//             .model({
+//                 walletTransactionId: a.id(),
+//                 fromAccount: a.string(),
+//                 transType: a.string(),
+//                 providerName: a.string(),
+//                 providerType: a.string(),
+//                 amount: a.string(),
+//                 activeProfile: a.belongsTo('UserProfile','walletTransactionId')
+//             }),
+        /**
+            CreditTransaction is used to create new transactions when the user is
+            using the app to pay for things, a record is created when
+            CreditAccountInfo-availableCredit is >= to CreditTransaction-amount
+         */
 
         CreditTransaction: a
             .model({
@@ -25,24 +49,30 @@ const schema = a
                 providerType: a.string(),
                 amount: a.string(),
                 activeProfile: a.belongsTo('UserProfile','creditTransactionId')
-            }),
+            })
+            .authorization((allow) => [
+                allow.owner()
+                    .to(['read','create']),
+            ]),
 
-        WalletAccountInfo: a
-            .model({
-                walletAccountId: a.id(),
-                walletAccount: a.string(),
-                accountStatus: a.string(),
-                availableBalance: a.integer(),
-                userProfile: a.belongsTo('UserProfile','walletAccountId')
-            }),
-
+//         WalletAccountInfo: a
+//             .model({
+//                 walletAccountId: a.id(),
+//                 walletAccount: a.string(),
+//                 accountStatus: a.string(),
+//                 availableBalance: a.integer(),
+//                 userProfile: a.belongsTo('UserProfile','walletAccountId')
+//             }),
+        /**
+            CreditAccountInfo is used to check if a transaction record should be created.
+         */
         CreditAccountInfo: a
             .model({
                 creditAccountId: a.id(),
                 creditAccount: a.string(),
                 accountStatus: a.string(),
-                availableCredit: a.integer(),
-                balanceOwing: a.integer(),
+                availableCredit: a.integer().authorization((allow) => [allow.owner().to(['update'])]),
+                balanceOwing: a.integer().authorization((allow) => [allow.owner().to(['update'])]),
                 creditLimit: a.integer(),
                 minimumDue: a.integer(),
                 dueDate: a.string(),
@@ -51,27 +81,32 @@ const schema = a
                 userProfile: a.belongsTo('UserProfile','creditAccountId')
             })
             .authorization((allow) => [
-                allow.ownerDefinedIn("profileOwner"),
+                allow.owner()
+                    .to(['read']),
+
             ]),
 
         UserProfile: a
             .model({
                 email: a.string(),
-                profileOwner: a.string(),
+                accountOwner: a.string(),
                 name: a.string(),
                 surname: a.string(),
                 govId: a.string(),
                 address: a.string(),
                 contacts: a.string(),
-                netIncome: a.integer(),
-                disIncome: a.integer(),
+                incomeType: a.integer(),
                 localExpense: a.string(),
                 signDeclaration: a.boolean(),
                 creditTransaction: a.hasMany('CreditTransaction','creditTransactionId'),
                 activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId'),
-                walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),
-                activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
-            }),
+                //walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),
+                //activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
+            })
+            .authorization((allow) => [
+                allow.owner()
+                    .to(['read']),
+            ]),
     }).authorization(allow => [allow.owner()]);
 
 export type Schema = ClientSchema<typeof schema>;
