@@ -71,8 +71,8 @@ const schema = a
                 creditAccountId: a.id(),
                 creditAccount: a.string(),
                 accountStatus: a.string(),
-                availableCredit: a.integer().authorization((allow) => [allow.owner().to(['update'])]),
-                balanceOwing: a.integer().authorization((allow) => [allow.owner().to(['update'])]),
+                availableCredit: a.integer(),
+                balanceOwing: a.integer(),
                 creditLimit: a.integer(),
                 minimumDue: a.integer(),
                 dueDate: a.string(),
@@ -82,7 +82,7 @@ const schema = a
             })
             .authorization((allow) => [
                 allow.owner()
-                    .to(['read','create']),
+                    .to(['read','create','update']),
 
             ]),
 
