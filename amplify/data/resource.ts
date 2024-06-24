@@ -82,7 +82,7 @@ const schema = a
             })
             .authorization((allow) => [
                 allow.owner()
-                    .to(['read']),
+                    .to(['read','create']),
 
             ]),
 
@@ -105,7 +105,7 @@ const schema = a
             })
             .authorization((allow) => [
                 allow.owner()
-                    .to(['read']),
+                    .to(['read','create']),
             ]),
     }).authorization(allow => [allow.owner()]);
 
