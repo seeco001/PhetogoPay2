@@ -100,7 +100,7 @@ const schema = a
                 signDeclaration: a.boolean(),
                 creditTransaction: a.hasMany('CreditTransaction','creditTransactionId'),
                 activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId'),
-                //walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),
+                //walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),,
                 //activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
             })
             .authorization((allow) => [
