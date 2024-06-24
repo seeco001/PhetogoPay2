@@ -28,38 +28,34 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the UserProfile type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "UserProfiles", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.READ })
 }, hasLazySupport = true)
 public final class UserProfile implements Model {
   public static final UserProfilePath rootPath = new UserProfilePath("root", false, null);
   public static final QueryField ID = field("UserProfile", "id");
   public static final QueryField EMAIL = field("UserProfile", "email");
-  public static final QueryField PROFILE_OWNER = field("UserProfile", "profileOwner");
+  public static final QueryField ACCOUNT_OWNER = field("UserProfile", "accountOwner");
   public static final QueryField NAME = field("UserProfile", "name");
   public static final QueryField SURNAME = field("UserProfile", "surname");
   public static final QueryField GOV_ID = field("UserProfile", "govId");
   public static final QueryField ADDRESS = field("UserProfile", "address");
   public static final QueryField CONTACTS = field("UserProfile", "contacts");
-  public static final QueryField NET_INCOME = field("UserProfile", "netIncome");
-  public static final QueryField DIS_INCOME = field("UserProfile", "disIncome");
+  public static final QueryField INCOME_TYPE = field("UserProfile", "incomeType");
   public static final QueryField LOCAL_EXPENSE = field("UserProfile", "localExpense");
   public static final QueryField SIGN_DECLARATION = field("UserProfile", "signDeclaration");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String email;
-  private final @ModelField(targetType="String") String profileOwner;
+  private final @ModelField(targetType="String") String accountOwner;
   private final @ModelField(targetType="String") String name;
   private final @ModelField(targetType="String") String surname;
   private final @ModelField(targetType="String") String govId;
   private final @ModelField(targetType="String") String address;
   private final @ModelField(targetType="String") String contacts;
-  private final @ModelField(targetType="Int") Integer netIncome;
-  private final @ModelField(targetType="Int") Integer disIncome;
+  private final @ModelField(targetType="Int") Integer incomeType;
   private final @ModelField(targetType="String") String localExpense;
   private final @ModelField(targetType="Boolean") Boolean signDeclaration;
   private final @ModelField(targetType="CreditTransaction") @HasMany(associatedWith = "activeProfile", type = CreditTransaction.class) ModelList<CreditTransaction> creditTransaction = null;
   private final @ModelField(targetType="CreditAccountInfo") @HasOne(associatedWith = "userProfile", type = CreditAccountInfo.class) ModelReference<CreditAccountInfo> activeCreditAccountInfo = null;
-  private final @ModelField(targetType="WalletTransaction") @HasMany(associatedWith = "activeProfile", type = WalletTransaction.class) ModelList<WalletTransaction> walletTransaction = null;
-  private final @ModelField(targetType="WalletAccountInfo") @HasOne(associatedWith = "userProfile", type = WalletAccountInfo.class) ModelReference<WalletAccountInfo> activeWalletAccountInfo = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -76,8 +72,8 @@ public final class UserProfile implements Model {
       return email;
   }
   
-  public String getProfileOwner() {
-      return profileOwner;
+  public String getAccountOwner() {
+      return accountOwner;
   }
   
   public String getName() {
@@ -100,12 +96,8 @@ public final class UserProfile implements Model {
       return contacts;
   }
   
-  public Integer getNetIncome() {
-      return netIncome;
-  }
-  
-  public Integer getDisIncome() {
-      return disIncome;
+  public Integer getIncomeType() {
+      return incomeType;
   }
   
   public String getLocalExpense() {
@@ -124,14 +116,6 @@ public final class UserProfile implements Model {
       return activeCreditAccountInfo;
   }
   
-  public ModelList<WalletTransaction> getWalletTransaction() {
-      return walletTransaction;
-  }
-  
-  public ModelReference<WalletAccountInfo> getActiveWalletAccountInfo() {
-      return activeWalletAccountInfo;
-  }
-  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -140,17 +124,16 @@ public final class UserProfile implements Model {
       return updatedAt;
   }
   
-  private UserProfile(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
+  private UserProfile(String id, String email, String accountOwner, String name, String surname, String govId, String address, String contacts, Integer incomeType, String localExpense, Boolean signDeclaration) {
     this.id = id;
     this.email = email;
-    this.profileOwner = profileOwner;
+    this.accountOwner = accountOwner;
     this.name = name;
     this.surname = surname;
     this.govId = govId;
     this.address = address;
     this.contacts = contacts;
-    this.netIncome = netIncome;
-    this.disIncome = disIncome;
+    this.incomeType = incomeType;
     this.localExpense = localExpense;
     this.signDeclaration = signDeclaration;
   }
@@ -165,14 +148,13 @@ public final class UserProfile implements Model {
       UserProfile userProfile = (UserProfile) obj;
       return ObjectsCompat.equals(getId(), userProfile.getId()) &&
               ObjectsCompat.equals(getEmail(), userProfile.getEmail()) &&
-              ObjectsCompat.equals(getProfileOwner(), userProfile.getProfileOwner()) &&
+              ObjectsCompat.equals(getAccountOwner(), userProfile.getAccountOwner()) &&
               ObjectsCompat.equals(getName(), userProfile.getName()) &&
               ObjectsCompat.equals(getSurname(), userProfile.getSurname()) &&
               ObjectsCompat.equals(getGovId(), userProfile.getGovId()) &&
               ObjectsCompat.equals(getAddress(), userProfile.getAddress()) &&
               ObjectsCompat.equals(getContacts(), userProfile.getContacts()) &&
-              ObjectsCompat.equals(getNetIncome(), userProfile.getNetIncome()) &&
-              ObjectsCompat.equals(getDisIncome(), userProfile.getDisIncome()) &&
+              ObjectsCompat.equals(getIncomeType(), userProfile.getIncomeType()) &&
               ObjectsCompat.equals(getLocalExpense(), userProfile.getLocalExpense()) &&
               ObjectsCompat.equals(getSignDeclaration(), userProfile.getSignDeclaration()) &&
               ObjectsCompat.equals(getCreatedAt(), userProfile.getCreatedAt()) &&
@@ -185,14 +167,13 @@ public final class UserProfile implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getEmail())
-      .append(getProfileOwner())
+      .append(getAccountOwner())
       .append(getName())
       .append(getSurname())
       .append(getGovId())
       .append(getAddress())
       .append(getContacts())
-      .append(getNetIncome())
-      .append(getDisIncome())
+      .append(getIncomeType())
       .append(getLocalExpense())
       .append(getSignDeclaration())
       .append(getCreatedAt())
@@ -207,14 +188,13 @@ public final class UserProfile implements Model {
       .append("UserProfile {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("email=" + String.valueOf(getEmail()) + ", ")
-      .append("profileOwner=" + String.valueOf(getProfileOwner()) + ", ")
+      .append("accountOwner=" + String.valueOf(getAccountOwner()) + ", ")
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("surname=" + String.valueOf(getSurname()) + ", ")
       .append("govId=" + String.valueOf(getGovId()) + ", ")
       .append("address=" + String.valueOf(getAddress()) + ", ")
       .append("contacts=" + String.valueOf(getContacts()) + ", ")
-      .append("netIncome=" + String.valueOf(getNetIncome()) + ", ")
-      .append("disIncome=" + String.valueOf(getDisIncome()) + ", ")
+      .append("incomeType=" + String.valueOf(getIncomeType()) + ", ")
       .append("localExpense=" + String.valueOf(getLocalExpense()) + ", ")
       .append("signDeclaration=" + String.valueOf(getSignDeclaration()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
@@ -247,7 +227,6 @@ public final class UserProfile implements Model {
       null,
       null,
       null,
-      null,
       null
     );
   }
@@ -255,14 +234,13 @@ public final class UserProfile implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       email,
-      profileOwner,
+      accountOwner,
       name,
       surname,
       govId,
       address,
       contacts,
-      netIncome,
-      disIncome,
+      incomeType,
       localExpense,
       signDeclaration);
   }
@@ -270,14 +248,13 @@ public final class UserProfile implements Model {
     UserProfile build();
     BuildStep id(String id);
     BuildStep email(String email);
-    BuildStep profileOwner(String profileOwner);
+    BuildStep accountOwner(String accountOwner);
     BuildStep name(String name);
     BuildStep surname(String surname);
     BuildStep govId(String govId);
     BuildStep address(String address);
     BuildStep contacts(String contacts);
-    BuildStep netIncome(Integer netIncome);
-    BuildStep disIncome(Integer disIncome);
+    BuildStep incomeType(Integer incomeType);
     BuildStep localExpense(String localExpense);
     BuildStep signDeclaration(Boolean signDeclaration);
   }
@@ -286,31 +263,29 @@ public final class UserProfile implements Model {
   public static class Builder implements BuildStep {
     private String id;
     private String email;
-    private String profileOwner;
+    private String accountOwner;
     private String name;
     private String surname;
     private String govId;
     private String address;
     private String contacts;
-    private Integer netIncome;
-    private Integer disIncome;
+    private Integer incomeType;
     private String localExpense;
     private Boolean signDeclaration;
     public Builder() {
       
     }
     
-    private Builder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
+    private Builder(String id, String email, String accountOwner, String name, String surname, String govId, String address, String contacts, Integer incomeType, String localExpense, Boolean signDeclaration) {
       this.id = id;
       this.email = email;
-      this.profileOwner = profileOwner;
+      this.accountOwner = accountOwner;
       this.name = name;
       this.surname = surname;
       this.govId = govId;
       this.address = address;
       this.contacts = contacts;
-      this.netIncome = netIncome;
-      this.disIncome = disIncome;
+      this.incomeType = incomeType;
       this.localExpense = localExpense;
       this.signDeclaration = signDeclaration;
     }
@@ -322,14 +297,13 @@ public final class UserProfile implements Model {
         return new UserProfile(
           id,
           email,
-          profileOwner,
+          accountOwner,
           name,
           surname,
           govId,
           address,
           contacts,
-          netIncome,
-          disIncome,
+          incomeType,
           localExpense,
           signDeclaration);
     }
@@ -341,8 +315,8 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public BuildStep profileOwner(String profileOwner) {
-        this.profileOwner = profileOwner;
+     public BuildStep accountOwner(String accountOwner) {
+        this.accountOwner = accountOwner;
         return this;
     }
     
@@ -377,14 +351,8 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public BuildStep netIncome(Integer netIncome) {
-        this.netIncome = netIncome;
-        return this;
-    }
-    
-    @Override
-     public BuildStep disIncome(Integer disIncome) {
-        this.disIncome = disIncome;
+     public BuildStep incomeType(Integer incomeType) {
+        this.incomeType = incomeType;
         return this;
     }
     
@@ -412,8 +380,8 @@ public final class UserProfile implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String email, String profileOwner, String name, String surname, String govId, String address, String contacts, Integer netIncome, Integer disIncome, String localExpense, Boolean signDeclaration) {
-      super(id, email, profileOwner, name, surname, govId, address, contacts, netIncome, disIncome, localExpense, signDeclaration);
+    private CopyOfBuilder(String id, String email, String accountOwner, String name, String surname, String govId, String address, String contacts, Integer incomeType, String localExpense, Boolean signDeclaration) {
+      super(id, email, accountOwner, name, surname, govId, address, contacts, incomeType, localExpense, signDeclaration);
       
     }
     
@@ -423,8 +391,8 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public CopyOfBuilder profileOwner(String profileOwner) {
-      return (CopyOfBuilder) super.profileOwner(profileOwner);
+     public CopyOfBuilder accountOwner(String accountOwner) {
+      return (CopyOfBuilder) super.accountOwner(accountOwner);
     }
     
     @Override
@@ -453,13 +421,8 @@ public final class UserProfile implements Model {
     }
     
     @Override
-     public CopyOfBuilder netIncome(Integer netIncome) {
-      return (CopyOfBuilder) super.netIncome(netIncome);
-    }
-    
-    @Override
-     public CopyOfBuilder disIncome(Integer disIncome) {
-      return (CopyOfBuilder) super.disIncome(disIncome);
+     public CopyOfBuilder incomeType(Integer incomeType) {
+      return (CopyOfBuilder) super.incomeType(incomeType);
     }
     
     @Override

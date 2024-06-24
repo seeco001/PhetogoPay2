@@ -10,8 +10,6 @@ import com.amplifyframework.core.model.PropertyPath;
 public final class UserProfilePath extends ModelPath<UserProfile> {
   private CreditTransactionPath creditTransaction;
   private CreditAccountInfoPath activeCreditAccountInfo;
-  private WalletTransactionPath walletTransaction;
-  private WalletAccountInfoPath activeWalletAccountInfo;
   UserProfilePath(@NonNull String name, @NonNull Boolean isCollection, @Nullable PropertyPath parent) {
     super(name, isCollection, parent, UserProfile.class);
   }
@@ -28,19 +26,5 @@ public final class UserProfilePath extends ModelPath<UserProfile> {
       activeCreditAccountInfo = new CreditAccountInfoPath("activeCreditAccountInfo", false, this);
     }
     return activeCreditAccountInfo;
-  }
-  
-  public synchronized WalletTransactionPath getWalletTransaction() {
-    if (walletTransaction == null) {
-      walletTransaction = new WalletTransactionPath("walletTransaction", true, this);
-    }
-    return walletTransaction;
-  }
-  
-  public synchronized WalletAccountInfoPath getActiveWalletAccountInfo() {
-    if (activeWalletAccountInfo == null) {
-      activeWalletAccountInfo = new WalletAccountInfoPath("activeWalletAccountInfo", false, this);
-    }
-    return activeWalletAccountInfo;
   }
 }

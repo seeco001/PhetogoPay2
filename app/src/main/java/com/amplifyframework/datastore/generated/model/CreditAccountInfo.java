@@ -26,7 +26,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the CreditAccountInfo type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "CreditAccountInfos", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "profileOwner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.READ })
 }, hasLazySupport = true)
 public final class CreditAccountInfo implements Model {
   public static final CreditAccountInfoPath rootPath = new CreditAccountInfoPath("root", false, null);
@@ -44,8 +44,12 @@ public final class CreditAccountInfo implements Model {
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String creditAccount;
   private final @ModelField(targetType="String") String accountStatus;
-  private final @ModelField(targetType="Int") Integer availableCredit;
-  private final @ModelField(targetType="Int") Integer balanceOwing;
+  private final @ModelField(targetType="Int", authRules = {
+    @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.UPDATE })
+  }) Integer availableCredit;
+  private final @ModelField(targetType="Int", authRules = {
+    @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.UPDATE })
+  }) Integer balanceOwing;
   private final @ModelField(targetType="Int") Integer creditLimit;
   private final @ModelField(targetType="Int") Integer minimumDue;
   private final @ModelField(targetType="String") String dueDate;
