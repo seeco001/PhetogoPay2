@@ -23,6 +23,42 @@ const schema = a
                     .to(['read','create']),
             ]),
 
+        /**
+            CreditTransaction is used to create new transactions when the user is
+            using the app to pay for things, a record is created when
+            CreditAccountInfo-availableCredit is >= to CreditTransaction-amount
+         */
+        CreditTransaction: a
+            .model({
+                creditAccountId: a.id(),
+                serviceProviderId: a.id(),
+                fromAccount: a.string(),
+                transType: a.string(),
+                amount: a.string(),
+                newBalance: a.string(),
+                serviceProvider: a.belongsTo('ServiceProviders', 'serviceProviderId'),
+                creditAccount: a.belongsTo('CreditAccountInfo', 'creditAccountId')
+            })
+            .authorization((allow) => [
+                allow.owner()
+                    .to(['read','create']),
+            ]),
+
+        ServiceProviders: a
+            .model({
+                storeId: a.id(),
+                providerName: a.string(),
+                address: a.string(),
+                operatingTimes: a.string(),
+                serviceType: a.string(),
+                telephone: a.string(),
+                transactions: a.hasMany('CreditTransaction', 'serviceProviderId')
+            })
+            .authorization((allow) => [
+                allow.authenticated()
+                    .to(['read']),
+            ]),
+
 
 //         WalletTransaction: a
 //             .model({
@@ -34,26 +70,9 @@ const schema = a
 //                 amount: a.string(),
 //                 activeProfile: a.belongsTo('UserProfile','walletTransactionId')
 //             }),
-        /**
-            CreditTransaction is used to create new transactions when the user is
-            using the app to pay for things, a record is created when
-            CreditAccountInfo-availableCredit is >= to CreditTransaction-amount
-         */
 
-        CreditTransaction: a
-            .model({
-                creditTransactionId: a.id(),
-                fromAccount: a.string(),
-                transType: a.string(),
-                providerName: a.string(),
-                providerType: a.string(),
-                amount: a.string(),
-                activeProfile: a.belongsTo('UserProfile','creditTransactionId')
-            })
-            .authorization((allow) => [
-                allow.owner()
-                    .to(['read','create']),
-            ]),
+
+
 
 //         WalletAccountInfo: a
 //             .model({
@@ -68,7 +87,7 @@ const schema = a
          */
         CreditAccountInfo: a
             .model({
-                creditAccountId: a.id(),
+                userProfileId: a.id(),
                 creditAccount: a.string(),
                 accountStatus: a.string(),
                 availableCredit: a.integer(),
@@ -78,7 +97,8 @@ const schema = a
                 dueDate: a.string(),
                 monthsPaid: a.string(),
                 monthsDefault: a.string(),
-                userProfile: a.belongsTo('UserProfile','creditAccountId')
+                transactions: a.hasMany('CreditTransaction', 'creditAccountId'),
+                userProfile: a.belongsTo('UserProfile','userProfileId')
             })
             .authorization((allow) => [
                 allow.owner()
@@ -98,8 +118,7 @@ const schema = a
                 incomeType: a.integer(),
                 localExpense: a.string(),
                 signDeclaration: a.boolean(),
-                creditTransaction: a.hasMany('CreditTransaction','creditTransactionId'),
-                activeCreditAccountInfo: a.hasOne('CreditAccountInfo','creditAccountId'),
+                activeCreditAccountInfo: a.hasOne('CreditAccountInfo','userProfileId'),
                 //walletTransaction: a.hasMany('WalletTransaction','walletTransactionId'),,
                 //activeWalletAccountInfo: a.hasOne('WalletAccountInfo','walletAccountId')
             })
