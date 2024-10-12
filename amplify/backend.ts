@@ -11,7 +11,7 @@ const backend = defineBackend({
   data,
   myDynamoDBFunction,
 });
-
+//
 const creditAccountInfoTable = backend.data.resources.tables["CreditAccountInfo"];
 const policy = new Policy(
   Stack.of(creditAccountInfoTable),
