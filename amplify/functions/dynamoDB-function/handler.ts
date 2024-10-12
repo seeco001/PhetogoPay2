@@ -76,14 +76,13 @@ export const handler: DynamoDBStreamHandler = async (event) => {
       try {
           logger.info(`******beginning of try-catch******`);
           await axios.post(
-              `https://graph.facebook.com/v21.0/+27686151614/messages`,
+              `https://graph.facebook.com/v21.0/364994256697626/messages`,
               //`${WHATSAPP_API_URL}/v13.0/your-whatsapp-business-id/messages`,
                messageData,
               {
                 headers: {
                   Authorization: `Bearer EAAGUVZCd5HZAUBO8BhydhwAWpoLnWpSZAfofAF8JvmPKNXXbuzd73jQZBmRZCCsX6Yv4kQqxO4AZCQhQyjwXb0enLESWSDo58PcibsYW5NS9IsK1IYXtB0QLDmHTKNY4ASQGp5ZAoWWmLvVV4fTKZByqTZAZAq2PD2JJBhZBUkknFFpgEaCS9tHnLkTBeIHgb7rnv75gyZCnwnyZCWhGibz32HV6PpFKrTxU1n2HZBC0n32210`,
-                  //Authorization: `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
-                  Content-Type: `application/json`,
+                  "Content-Type": `application/json`
                 }
               }
           );
