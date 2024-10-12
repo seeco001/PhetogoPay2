@@ -21,6 +21,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
     logger.info(`Event Type: ${record.eventName}`);
 
     if (record.eventName === "MODIFY") {
+        logger.info(`******MODIFY has taken Place******`);
        const messageData = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -73,8 +74,9 @@ export const handler: DynamoDBStreamHandler = async (event) => {
       }
 
       try {
+          logger.info(`******beginning of try-catch******`);
           await axios.post(
-              `https://graph.facebook.com/v21.0/0686151614/messages/v13.0/532936298847497/messages`,
+              `https://graph.facebook.com/v21.0/+27686151614/messages`,
               //`${WHATSAPP_API_URL}/v13.0/your-whatsapp-business-id/messages`,
                messageData,
               {
@@ -85,8 +87,10 @@ export const handler: DynamoDBStreamHandler = async (event) => {
                 }
               }
           );
+          logger.info(`******axios post happened******`);
           //logger.info(`WhatsApp message sent successfully to ${phoneNumber}`);
       } catch (error) {
+          logger.info(`******Unfortunately catch******`);
         //logger.error(`Failed to send WhatsApp message: ${error.message}`);
       }
   ///////////////////////////////////////////////////////////////////////////////////////
