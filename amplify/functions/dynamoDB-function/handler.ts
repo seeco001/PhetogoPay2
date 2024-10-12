@@ -11,7 +11,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
     logger.info(`Processing record: ${record.eventID}`);
     logger.info(`Event Type: ${record.eventName}`);
 
-    if (record.eventName === "UPDATE") {
+    if (record.eventName === "MODIFY") {
       // business logic to process updated records
       logger.info(`New Image: ${JSON.stringify(record.dynamodb?.NewImage)}`);
     }
