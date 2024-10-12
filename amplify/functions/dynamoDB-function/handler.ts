@@ -24,7 +24,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
        const messageData = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": "+27765283139",
+            "to": "+27732201360",
             "type": "template",
             "template": {
                 "name": "phetogopay_transactions",
