@@ -31,6 +31,7 @@ const policy = new Policy(
     ],
   }
 );
+//good
 backend.myDynamoDBFunction.resources.lambda.role?.attachInlinePolicy(policy);
 
 const mapping = new EventSourceMapping(
