@@ -15,7 +15,6 @@ export const getCreditAccountInfo = /* GraphQL */ `query GetCreditAccountInfo($i
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -23,6 +22,10 @@ export const getCreditAccountInfo = /* GraphQL */ `query GetCreditAccountInfo($i
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -41,6 +44,7 @@ export const getCreditAccountInfo = /* GraphQL */ `query GetCreditAccountInfo($i
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -50,31 +54,43 @@ export const getCreditAccountInfo = /* GraphQL */ `query GetCreditAccountInfo($i
 >;
 export const getCreditTransaction = /* GraphQL */ `query GetCreditTransaction($id: ID!) {
   getCreditTransaction(id: $id) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -99,6 +115,28 @@ export const getNewAccounts = /* GraphQL */ `query GetNewAccounts($id: ID!) {
   APITypes.GetNewAccountsQueryVariables,
   APITypes.GetNewAccountsQuery
 >;
+export const getServiceProviders = /* GraphQL */ `query GetServiceProviders($id: ID!) {
+  getServiceProviders(id: $id) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetServiceProvidersQueryVariables,
+  APITypes.GetServiceProvidersQuery
+>;
 export const getUserProfile = /* GraphQL */ `query GetUserProfile($id: ID!) {
   getUserProfile(id: $id) {
     accountOwner
@@ -108,7 +146,6 @@ export const getUserProfile = /* GraphQL */ `query GetUserProfile($id: ID!) {
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -117,15 +154,12 @@ export const getUserProfile = /* GraphQL */ `query GetUserProfile($id: ID!) {
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
@@ -159,7 +193,6 @@ export const listCreditAccountInfos = /* GraphQL */ `query ListCreditAccountInfo
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -168,6 +201,7 @@ export const listCreditAccountInfos = /* GraphQL */ `query ListCreditAccountInfo
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     nextToken
@@ -191,12 +225,12 @@ export const listCreditTransactions = /* GraphQL */ `query ListCreditTransaction
     items {
       amount
       createdAt
-      creditTransactionId
+      creditAccountId
       fromAccount
       id
+      newBalance
       owner
-      providerName
-      providerType
+      serviceProviderId
       transType
       updatedAt
       __typename
@@ -231,6 +265,32 @@ export const listNewAccounts = /* GraphQL */ `query ListNewAccounts(
 ` as GeneratedQuery<
   APITypes.ListNewAccountsQueryVariables,
   APITypes.ListNewAccountsQuery
+>;
+export const listServiceProviders = /* GraphQL */ `query ListServiceProviders(
+  $filter: ModelServiceProvidersFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listServiceProviders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListServiceProvidersQueryVariables,
+  APITypes.ListServiceProvidersQuery
 >;
 export const listUserProfiles = /* GraphQL */ `query ListUserProfiles(
   $filter: ModelUserProfileFilterInput

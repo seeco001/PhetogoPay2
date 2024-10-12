@@ -18,7 +18,6 @@ export const createCreditAccountInfo = /* GraphQL */ `mutation CreateCreditAccou
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -26,6 +25,10 @@ export const createCreditAccountInfo = /* GraphQL */ `mutation CreateCreditAccou
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -44,6 +47,7 @@ export const createCreditAccountInfo = /* GraphQL */ `mutation CreateCreditAccou
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -56,31 +60,43 @@ export const createCreditTransaction = /* GraphQL */ `mutation CreateCreditTrans
   $input: CreateCreditTransactionInput!
 ) {
   createCreditTransaction(condition: $condition, input: $input) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -108,6 +124,31 @@ export const createNewAccounts = /* GraphQL */ `mutation CreateNewAccounts(
   APITypes.CreateNewAccountsMutationVariables,
   APITypes.CreateNewAccountsMutation
 >;
+export const createServiceProviders = /* GraphQL */ `mutation CreateServiceProviders(
+  $condition: ModelServiceProvidersConditionInput
+  $input: CreateServiceProvidersInput!
+) {
+  createServiceProviders(condition: $condition, input: $input) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateServiceProvidersMutationVariables,
+  APITypes.CreateServiceProvidersMutation
+>;
 export const createUserProfile = /* GraphQL */ `mutation CreateUserProfile(
   $condition: ModelUserProfileConditionInput
   $input: CreateUserProfileInput!
@@ -120,7 +161,6 @@ export const createUserProfile = /* GraphQL */ `mutation CreateUserProfile(
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -129,15 +169,12 @@ export const createUserProfile = /* GraphQL */ `mutation CreateUserProfile(
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
@@ -165,7 +202,6 @@ export const deleteCreditAccountInfo = /* GraphQL */ `mutation DeleteCreditAccou
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -173,6 +209,10 @@ export const deleteCreditAccountInfo = /* GraphQL */ `mutation DeleteCreditAccou
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -191,6 +231,7 @@ export const deleteCreditAccountInfo = /* GraphQL */ `mutation DeleteCreditAccou
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -203,31 +244,43 @@ export const deleteCreditTransaction = /* GraphQL */ `mutation DeleteCreditTrans
   $input: DeleteCreditTransactionInput!
 ) {
   deleteCreditTransaction(condition: $condition, input: $input) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -255,6 +308,31 @@ export const deleteNewAccounts = /* GraphQL */ `mutation DeleteNewAccounts(
   APITypes.DeleteNewAccountsMutationVariables,
   APITypes.DeleteNewAccountsMutation
 >;
+export const deleteServiceProviders = /* GraphQL */ `mutation DeleteServiceProviders(
+  $condition: ModelServiceProvidersConditionInput
+  $input: DeleteServiceProvidersInput!
+) {
+  deleteServiceProviders(condition: $condition, input: $input) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteServiceProvidersMutationVariables,
+  APITypes.DeleteServiceProvidersMutation
+>;
 export const deleteUserProfile = /* GraphQL */ `mutation DeleteUserProfile(
   $condition: ModelUserProfileConditionInput
   $input: DeleteUserProfileInput!
@@ -267,7 +345,6 @@ export const deleteUserProfile = /* GraphQL */ `mutation DeleteUserProfile(
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -276,15 +353,12 @@ export const deleteUserProfile = /* GraphQL */ `mutation DeleteUserProfile(
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
@@ -312,7 +386,6 @@ export const updateCreditAccountInfo = /* GraphQL */ `mutation UpdateCreditAccou
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -320,6 +393,10 @@ export const updateCreditAccountInfo = /* GraphQL */ `mutation UpdateCreditAccou
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -338,6 +415,7 @@ export const updateCreditAccountInfo = /* GraphQL */ `mutation UpdateCreditAccou
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -350,31 +428,43 @@ export const updateCreditTransaction = /* GraphQL */ `mutation UpdateCreditTrans
   $input: UpdateCreditTransactionInput!
 ) {
   updateCreditTransaction(condition: $condition, input: $input) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -402,6 +492,31 @@ export const updateNewAccounts = /* GraphQL */ `mutation UpdateNewAccounts(
   APITypes.UpdateNewAccountsMutationVariables,
   APITypes.UpdateNewAccountsMutation
 >;
+export const updateServiceProviders = /* GraphQL */ `mutation UpdateServiceProviders(
+  $condition: ModelServiceProvidersConditionInput
+  $input: UpdateServiceProvidersInput!
+) {
+  updateServiceProviders(condition: $condition, input: $input) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateServiceProvidersMutationVariables,
+  APITypes.UpdateServiceProvidersMutation
+>;
 export const updateUserProfile = /* GraphQL */ `mutation UpdateUserProfile(
   $condition: ModelUserProfileConditionInput
   $input: UpdateUserProfileInput!
@@ -414,7 +529,6 @@ export const updateUserProfile = /* GraphQL */ `mutation UpdateUserProfile(
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -423,15 +537,12 @@ export const updateUserProfile = /* GraphQL */ `mutation UpdateUserProfile(
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id

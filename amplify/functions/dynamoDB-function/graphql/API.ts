@@ -9,7 +9,6 @@ export type CreditAccountInfo = {
   balanceOwing?: number | null,
   createdAt: string,
   creditAccount?: string | null,
-  creditAccountId?: string | null,
   creditLimit?: number | null,
   dueDate?: string | null,
   id: string,
@@ -17,28 +16,10 @@ export type CreditAccountInfo = {
   monthsDefault?: string | null,
   monthsPaid?: string | null,
   owner?: string | null,
+  transactions?: ModelCreditTransactionConnection | null,
   updatedAt: string,
   userProfile?: UserProfile | null,
-};
-
-export type UserProfile = {
-  __typename: "UserProfile",
-  accountOwner?: string | null,
-  activeCreditAccountInfo?: CreditAccountInfo | null,
-  address?: string | null,
-  contacts?: string | null,
-  createdAt: string,
-  creditTransaction?: ModelCreditTransactionConnection | null,
-  email?: string | null,
-  govId?: string | null,
-  id: string,
-  incomeType?: number | null,
-  localExpense?: string | null,
-  name?: string | null,
-  owner?: string | null,
-  signDeclaration?: boolean | null,
-  surname?: string | null,
-  updatedAt: string,
+  userProfileId?: string | null,
 };
 
 export type ModelCreditTransactionConnection = {
@@ -49,16 +30,50 @@ export type ModelCreditTransactionConnection = {
 
 export type CreditTransaction = {
   __typename: "CreditTransaction",
-  activeProfile?: UserProfile | null,
   amount?: string | null,
   createdAt: string,
-  creditTransactionId?: string | null,
+  creditAccount?: CreditAccountInfo | null,
+  creditAccountId?: string | null,
   fromAccount?: string | null,
   id: string,
+  newBalance?: string | null,
   owner?: string | null,
-  providerName?: string | null,
-  providerType?: string | null,
+  serviceProvider?: ServiceProviders | null,
+  serviceProviderId?: string | null,
   transType?: string | null,
+  updatedAt: string,
+};
+
+export type ServiceProviders = {
+  __typename: "ServiceProviders",
+  address?: string | null,
+  createdAt: string,
+  id: string,
+  operatingTimes?: string | null,
+  providerName?: string | null,
+  serviceType?: string | null,
+  storeId?: string | null,
+  telephone?: string | null,
+  transactions?: ModelCreditTransactionConnection | null,
+  updatedAt: string,
+};
+
+export type UserProfile = {
+  __typename: "UserProfile",
+  accountOwner?: string | null,
+  activeCreditAccountInfo?: CreditAccountInfo | null,
+  address?: string | null,
+  contacts?: string | null,
+  createdAt: string,
+  email?: string | null,
+  govId?: string | null,
+  id: string,
+  incomeType?: number | null,
+  localExpense?: string | null,
+  name?: string | null,
+  owner?: string | null,
+  signDeclaration?: boolean | null,
+  surname?: string | null,
   updatedAt: string,
 };
 
@@ -79,7 +94,6 @@ export type ModelCreditAccountInfoFilterInput = {
   balanceOwing?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   creditAccount?: ModelStringInput | null,
-  creditAccountId?: ModelIDInput | null,
   creditLimit?: ModelIntInput | null,
   dueDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -90,6 +104,7 @@ export type ModelCreditAccountInfoFilterInput = {
   or?: Array< ModelCreditAccountInfoFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  userProfileId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -170,14 +185,14 @@ export type ModelCreditTransactionFilterInput = {
   amount?: ModelStringInput | null,
   and?: Array< ModelCreditTransactionFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  creditTransactionId?: ModelIDInput | null,
+  creditAccountId?: ModelIDInput | null,
   fromAccount?: ModelStringInput | null,
   id?: ModelIDInput | null,
+  newBalance?: ModelStringInput | null,
   not?: ModelCreditTransactionFilterInput | null,
   or?: Array< ModelCreditTransactionFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  providerName?: ModelStringInput | null,
-  providerType?: ModelStringInput | null,
+  serviceProviderId?: ModelIDInput | null,
   transType?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -197,6 +212,27 @@ export type ModelNewAccountsFilterInput = {
 export type ModelNewAccountsConnection = {
   __typename: "ModelNewAccountsConnection",
   items:  Array<NewAccounts | null >,
+  nextToken?: string | null,
+};
+
+export type ModelServiceProvidersFilterInput = {
+  address?: ModelStringInput | null,
+  and?: Array< ModelServiceProvidersFilterInput | null > | null,
+  createdAt?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelServiceProvidersFilterInput | null,
+  operatingTimes?: ModelStringInput | null,
+  or?: Array< ModelServiceProvidersFilterInput | null > | null,
+  providerName?: ModelStringInput | null,
+  serviceType?: ModelStringInput | null,
+  storeId?: ModelIDInput | null,
+  telephone?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelServiceProvidersConnection = {
+  __typename: "ModelServiceProvidersConnection",
+  items:  Array<ServiceProviders | null >,
   nextToken?: string | null,
 };
 
@@ -240,7 +276,6 @@ export type ModelCreditAccountInfoConditionInput = {
   balanceOwing?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   creditAccount?: ModelStringInput | null,
-  creditAccountId?: ModelIDInput | null,
   creditLimit?: ModelIntInput | null,
   dueDate?: ModelStringInput | null,
   minimumDue?: ModelIntInput | null,
@@ -250,6 +285,7 @@ export type ModelCreditAccountInfoConditionInput = {
   or?: Array< ModelCreditAccountInfoConditionInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  userProfileId?: ModelIDInput | null,
 };
 
 export type CreateCreditAccountInfoInput = {
@@ -257,37 +293,37 @@ export type CreateCreditAccountInfoInput = {
   availableCredit?: number | null,
   balanceOwing?: number | null,
   creditAccount?: string | null,
-  creditAccountId?: string | null,
   creditLimit?: number | null,
   dueDate?: string | null,
   id?: string | null,
   minimumDue?: number | null,
   monthsDefault?: string | null,
   monthsPaid?: string | null,
+  userProfileId?: string | null,
 };
 
 export type ModelCreditTransactionConditionInput = {
   amount?: ModelStringInput | null,
   and?: Array< ModelCreditTransactionConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  creditTransactionId?: ModelIDInput | null,
+  creditAccountId?: ModelIDInput | null,
   fromAccount?: ModelStringInput | null,
+  newBalance?: ModelStringInput | null,
   not?: ModelCreditTransactionConditionInput | null,
   or?: Array< ModelCreditTransactionConditionInput | null > | null,
   owner?: ModelStringInput | null,
-  providerName?: ModelStringInput | null,
-  providerType?: ModelStringInput | null,
+  serviceProviderId?: ModelIDInput | null,
   transType?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
 export type CreateCreditTransactionInput = {
   amount?: string | null,
-  creditTransactionId?: string | null,
+  creditAccountId?: string | null,
   fromAccount?: string | null,
   id?: string | null,
-  providerName?: string | null,
-  providerType?: string | null,
+  newBalance?: string | null,
+  serviceProviderId?: string | null,
   transType?: string | null,
 };
 
@@ -307,6 +343,30 @@ export type CreateNewAccountsInput = {
   govId?: string | null,
   id?: string | null,
   sub?: string | null,
+};
+
+export type ModelServiceProvidersConditionInput = {
+  address?: ModelStringInput | null,
+  and?: Array< ModelServiceProvidersConditionInput | null > | null,
+  createdAt?: ModelStringInput | null,
+  not?: ModelServiceProvidersConditionInput | null,
+  operatingTimes?: ModelStringInput | null,
+  or?: Array< ModelServiceProvidersConditionInput | null > | null,
+  providerName?: ModelStringInput | null,
+  serviceType?: ModelStringInput | null,
+  storeId?: ModelIDInput | null,
+  telephone?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateServiceProvidersInput = {
+  address?: string | null,
+  id?: string | null,
+  operatingTimes?: string | null,
+  providerName?: string | null,
+  serviceType?: string | null,
+  storeId?: string | null,
+  telephone?: string | null,
 };
 
 export type ModelUserProfileConditionInput = {
@@ -354,6 +414,10 @@ export type DeleteNewAccountsInput = {
   id: string,
 };
 
+export type DeleteServiceProvidersInput = {
+  id: string,
+};
+
 export type DeleteUserProfileInput = {
   id: string,
 };
@@ -363,22 +427,22 @@ export type UpdateCreditAccountInfoInput = {
   availableCredit?: number | null,
   balanceOwing?: number | null,
   creditAccount?: string | null,
-  creditAccountId?: string | null,
   creditLimit?: number | null,
   dueDate?: string | null,
   id: string,
   minimumDue?: number | null,
   monthsDefault?: string | null,
   monthsPaid?: string | null,
+  userProfileId?: string | null,
 };
 
 export type UpdateCreditTransactionInput = {
   amount?: string | null,
-  creditTransactionId?: string | null,
+  creditAccountId?: string | null,
   fromAccount?: string | null,
   id: string,
-  providerName?: string | null,
-  providerType?: string | null,
+  newBalance?: string | null,
+  serviceProviderId?: string | null,
   transType?: string | null,
 };
 
@@ -387,6 +451,16 @@ export type UpdateNewAccountsInput = {
   govId?: string | null,
   id: string,
   sub?: string | null,
+};
+
+export type UpdateServiceProvidersInput = {
+  address?: string | null,
+  id: string,
+  operatingTimes?: string | null,
+  providerName?: string | null,
+  serviceType?: string | null,
+  storeId?: string | null,
+  telephone?: string | null,
 };
 
 export type UpdateUserProfileInput = {
@@ -410,7 +484,6 @@ export type ModelSubscriptionCreditAccountInfoFilterInput = {
   balanceOwing?: ModelSubscriptionIntInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   creditAccount?: ModelSubscriptionStringInput | null,
-  creditAccountId?: ModelSubscriptionIDInput | null,
   creditLimit?: ModelSubscriptionIntInput | null,
   dueDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
@@ -420,6 +493,7 @@ export type ModelSubscriptionCreditAccountInfoFilterInput = {
   or?: Array< ModelSubscriptionCreditAccountInfoFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  userProfileId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -468,13 +542,13 @@ export type ModelSubscriptionCreditTransactionFilterInput = {
   amount?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCreditTransactionFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  creditTransactionId?: ModelSubscriptionIDInput | null,
+  creditAccountId?: ModelSubscriptionIDInput | null,
   fromAccount?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
+  newBalance?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionCreditTransactionFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  providerName?: ModelSubscriptionStringInput | null,
-  providerType?: ModelSubscriptionStringInput | null,
+  serviceProviderId?: ModelSubscriptionIDInput | null,
   transType?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
@@ -487,6 +561,20 @@ export type ModelSubscriptionNewAccountsFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionNewAccountsFilterInput | null > | null,
   sub?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionServiceProvidersFilterInput = {
+  address?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionServiceProvidersFilterInput | null > | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  operatingTimes?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionServiceProvidersFilterInput | null > | null,
+  providerName?: ModelSubscriptionStringInput | null,
+  serviceType?: ModelSubscriptionStringInput | null,
+  storeId?: ModelSubscriptionIDInput | null,
+  telephone?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
@@ -526,7 +614,6 @@ export type GetCreditAccountInfoQuery = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -534,6 +621,10 @@ export type GetCreditAccountInfoQuery = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -552,6 +643,7 @@ export type GetCreditAccountInfoQuery = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -562,31 +654,43 @@ export type GetCreditTransactionQueryVariables = {
 export type GetCreditTransactionQuery = {
   getCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -608,6 +712,29 @@ export type GetNewAccountsQuery = {
   } | null,
 };
 
+export type GetServiceProvidersQueryVariables = {
+  id: string,
+};
+
+export type GetServiceProvidersQuery = {
+  getServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserProfileQueryVariables = {
   id: string,
 };
@@ -623,7 +750,6 @@ export type GetUserProfileQuery = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -632,14 +758,11 @@ export type GetUserProfileQuery = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -669,7 +792,6 @@ export type ListCreditAccountInfosQuery = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -678,6 +800,7 @@ export type ListCreditAccountInfosQuery = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -696,12 +819,12 @@ export type ListCreditTransactionsQuery = {
       __typename: "CreditTransaction",
       amount?: string | null,
       createdAt: string,
-      creditTransactionId?: string | null,
+      creditAccountId?: string | null,
       fromAccount?: string | null,
       id: string,
+      newBalance?: string | null,
       owner?: string | null,
-      providerName?: string | null,
-      providerType?: string | null,
+      serviceProviderId?: string | null,
       transType?: string | null,
       updatedAt: string,
     } | null >,
@@ -725,6 +848,31 @@ export type ListNewAccountsQuery = {
       govId?: string | null,
       id: string,
       sub?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListServiceProvidersQueryVariables = {
+  filter?: ModelServiceProvidersFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListServiceProvidersQuery = {
+  listServiceProviders?:  {
+    __typename: "ModelServiceProvidersConnection",
+    items:  Array< {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -774,7 +922,6 @@ export type CreateCreditAccountInfoMutation = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -782,6 +929,10 @@ export type CreateCreditAccountInfoMutation = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -800,6 +951,7 @@ export type CreateCreditAccountInfoMutation = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -811,31 +963,43 @@ export type CreateCreditTransactionMutationVariables = {
 export type CreateCreditTransactionMutation = {
   createCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -858,6 +1022,30 @@ export type CreateNewAccountsMutation = {
   } | null,
 };
 
+export type CreateServiceProvidersMutationVariables = {
+  condition?: ModelServiceProvidersConditionInput | null,
+  input: CreateServiceProvidersInput,
+};
+
+export type CreateServiceProvidersMutation = {
+  createServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateUserProfileMutationVariables = {
   condition?: ModelUserProfileConditionInput | null,
   input: CreateUserProfileInput,
@@ -874,7 +1062,6 @@ export type CreateUserProfileMutation = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -883,14 +1070,11 @@ export type CreateUserProfileMutation = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -917,7 +1101,6 @@ export type DeleteCreditAccountInfoMutation = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -925,6 +1108,10 @@ export type DeleteCreditAccountInfoMutation = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -943,6 +1130,7 @@ export type DeleteCreditAccountInfoMutation = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -954,31 +1142,43 @@ export type DeleteCreditTransactionMutationVariables = {
 export type DeleteCreditTransactionMutation = {
   deleteCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -1001,6 +1201,30 @@ export type DeleteNewAccountsMutation = {
   } | null,
 };
 
+export type DeleteServiceProvidersMutationVariables = {
+  condition?: ModelServiceProvidersConditionInput | null,
+  input: DeleteServiceProvidersInput,
+};
+
+export type DeleteServiceProvidersMutation = {
+  deleteServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type DeleteUserProfileMutationVariables = {
   condition?: ModelUserProfileConditionInput | null,
   input: DeleteUserProfileInput,
@@ -1017,7 +1241,6 @@ export type DeleteUserProfileMutation = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -1026,14 +1249,11 @@ export type DeleteUserProfileMutation = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -1060,7 +1280,6 @@ export type UpdateCreditAccountInfoMutation = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -1068,6 +1287,10 @@ export type UpdateCreditAccountInfoMutation = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -1086,6 +1309,7 @@ export type UpdateCreditAccountInfoMutation = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -1097,31 +1321,43 @@ export type UpdateCreditTransactionMutationVariables = {
 export type UpdateCreditTransactionMutation = {
   updateCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -1144,6 +1380,30 @@ export type UpdateNewAccountsMutation = {
   } | null,
 };
 
+export type UpdateServiceProvidersMutationVariables = {
+  condition?: ModelServiceProvidersConditionInput | null,
+  input: UpdateServiceProvidersInput,
+};
+
+export type UpdateServiceProvidersMutation = {
+  updateServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type UpdateUserProfileMutationVariables = {
   condition?: ModelUserProfileConditionInput | null,
   input: UpdateUserProfileInput,
@@ -1160,7 +1420,6 @@ export type UpdateUserProfileMutation = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -1169,14 +1428,11 @@ export type UpdateUserProfileMutation = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -1203,7 +1459,6 @@ export type OnCreateCreditAccountInfoSubscription = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -1211,6 +1466,10 @@ export type OnCreateCreditAccountInfoSubscription = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -1229,6 +1488,7 @@ export type OnCreateCreditAccountInfoSubscription = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -1240,31 +1500,43 @@ export type OnCreateCreditTransactionSubscriptionVariables = {
 export type OnCreateCreditTransactionSubscription = {
   onCreateCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -1286,6 +1558,29 @@ export type OnCreateNewAccountsSubscription = {
   } | null,
 };
 
+export type OnCreateServiceProvidersSubscriptionVariables = {
+  filter?: ModelSubscriptionServiceProvidersFilterInput | null,
+};
+
+export type OnCreateServiceProvidersSubscription = {
+  onCreateServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateUserProfileSubscriptionVariables = {
   filter?: ModelSubscriptionUserProfileFilterInput | null,
   owner?: string | null,
@@ -1302,7 +1597,6 @@ export type OnCreateUserProfileSubscription = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -1311,14 +1605,11 @@ export type OnCreateUserProfileSubscription = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -1345,7 +1636,6 @@ export type OnDeleteCreditAccountInfoSubscription = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -1353,6 +1643,10 @@ export type OnDeleteCreditAccountInfoSubscription = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -1371,6 +1665,7 @@ export type OnDeleteCreditAccountInfoSubscription = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -1382,31 +1677,43 @@ export type OnDeleteCreditTransactionSubscriptionVariables = {
 export type OnDeleteCreditTransactionSubscription = {
   onDeleteCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -1428,6 +1735,29 @@ export type OnDeleteNewAccountsSubscription = {
   } | null,
 };
 
+export type OnDeleteServiceProvidersSubscriptionVariables = {
+  filter?: ModelSubscriptionServiceProvidersFilterInput | null,
+};
+
+export type OnDeleteServiceProvidersSubscription = {
+  onDeleteServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnDeleteUserProfileSubscriptionVariables = {
   filter?: ModelSubscriptionUserProfileFilterInput | null,
   owner?: string | null,
@@ -1444,7 +1774,6 @@ export type OnDeleteUserProfileSubscription = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -1453,14 +1782,11 @@ export type OnDeleteUserProfileSubscription = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,
@@ -1487,7 +1813,6 @@ export type OnUpdateCreditAccountInfoSubscription = {
     balanceOwing?: number | null,
     createdAt: string,
     creditAccount?: string | null,
-    creditAccountId?: string | null,
     creditLimit?: number | null,
     dueDate?: string | null,
     id: string,
@@ -1495,6 +1820,10 @@ export type OnUpdateCreditAccountInfoSubscription = {
     monthsDefault?: string | null,
     monthsPaid?: string | null,
     owner?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     userProfile?:  {
       __typename: "UserProfile",
@@ -1513,6 +1842,7 @@ export type OnUpdateCreditAccountInfoSubscription = {
       surname?: string | null,
       updatedAt: string,
     } | null,
+    userProfileId?: string | null,
   } | null,
 };
 
@@ -1524,31 +1854,43 @@ export type OnUpdateCreditTransactionSubscriptionVariables = {
 export type OnUpdateCreditTransactionSubscription = {
   onUpdateCreditTransaction?:  {
     __typename: "CreditTransaction",
-    activeProfile?:  {
-      __typename: "UserProfile",
-      accountOwner?: string | null,
-      address?: string | null,
-      contacts?: string | null,
-      createdAt: string,
-      email?: string | null,
-      govId?: string | null,
-      id: string,
-      incomeType?: number | null,
-      localExpense?: string | null,
-      name?: string | null,
-      owner?: string | null,
-      signDeclaration?: boolean | null,
-      surname?: string | null,
-      updatedAt: string,
-    } | null,
     amount?: string | null,
     createdAt: string,
-    creditTransactionId?: string | null,
+    creditAccount?:  {
+      __typename: "CreditAccountInfo",
+      accountStatus?: string | null,
+      availableCredit?: number | null,
+      balanceOwing?: number | null,
+      createdAt: string,
+      creditAccount?: string | null,
+      creditLimit?: number | null,
+      dueDate?: string | null,
+      id: string,
+      minimumDue?: number | null,
+      monthsDefault?: string | null,
+      monthsPaid?: string | null,
+      owner?: string | null,
+      updatedAt: string,
+      userProfileId?: string | null,
+    } | null,
+    creditAccountId?: string | null,
     fromAccount?: string | null,
     id: string,
+    newBalance?: string | null,
     owner?: string | null,
-    providerName?: string | null,
-    providerType?: string | null,
+    serviceProvider?:  {
+      __typename: "ServiceProviders",
+      address?: string | null,
+      createdAt: string,
+      id: string,
+      operatingTimes?: string | null,
+      providerName?: string | null,
+      serviceType?: string | null,
+      storeId?: string | null,
+      telephone?: string | null,
+      updatedAt: string,
+    } | null,
+    serviceProviderId?: string | null,
     transType?: string | null,
     updatedAt: string,
   } | null,
@@ -1570,6 +1912,29 @@ export type OnUpdateNewAccountsSubscription = {
   } | null,
 };
 
+export type OnUpdateServiceProvidersSubscriptionVariables = {
+  filter?: ModelSubscriptionServiceProvidersFilterInput | null,
+};
+
+export type OnUpdateServiceProvidersSubscription = {
+  onUpdateServiceProviders?:  {
+    __typename: "ServiceProviders",
+    address?: string | null,
+    createdAt: string,
+    id: string,
+    operatingTimes?: string | null,
+    providerName?: string | null,
+    serviceType?: string | null,
+    storeId?: string | null,
+    telephone?: string | null,
+    transactions?:  {
+      __typename: "ModelCreditTransactionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnUpdateUserProfileSubscriptionVariables = {
   filter?: ModelSubscriptionUserProfileFilterInput | null,
   owner?: string | null,
@@ -1586,7 +1951,6 @@ export type OnUpdateUserProfileSubscription = {
       balanceOwing?: number | null,
       createdAt: string,
       creditAccount?: string | null,
-      creditAccountId?: string | null,
       creditLimit?: number | null,
       dueDate?: string | null,
       id: string,
@@ -1595,14 +1959,11 @@ export type OnUpdateUserProfileSubscription = {
       monthsPaid?: string | null,
       owner?: string | null,
       updatedAt: string,
+      userProfileId?: string | null,
     } | null,
     address?: string | null,
     contacts?: string | null,
     createdAt: string,
-    creditTransaction?:  {
-      __typename: "ModelCreditTransactionConnection",
-      nextToken?: string | null,
-    } | null,
     email?: string | null,
     govId?: string | null,
     id: string,

@@ -18,7 +18,6 @@ export const onCreateCreditAccountInfo = /* GraphQL */ `subscription OnCreateCre
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -26,6 +25,10 @@ export const onCreateCreditAccountInfo = /* GraphQL */ `subscription OnCreateCre
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -44,6 +47,7 @@ export const onCreateCreditAccountInfo = /* GraphQL */ `subscription OnCreateCre
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -56,31 +60,43 @@ export const onCreateCreditTransaction = /* GraphQL */ `subscription OnCreateCre
   $owner: String
 ) {
   onCreateCreditTransaction(filter: $filter, owner: $owner) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -107,6 +123,30 @@ export const onCreateNewAccounts = /* GraphQL */ `subscription OnCreateNewAccoun
   APITypes.OnCreateNewAccountsSubscriptionVariables,
   APITypes.OnCreateNewAccountsSubscription
 >;
+export const onCreateServiceProviders = /* GraphQL */ `subscription OnCreateServiceProviders(
+  $filter: ModelSubscriptionServiceProvidersFilterInput
+) {
+  onCreateServiceProviders(filter: $filter) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateServiceProvidersSubscriptionVariables,
+  APITypes.OnCreateServiceProvidersSubscription
+>;
 export const onCreateUserProfile = /* GraphQL */ `subscription OnCreateUserProfile(
   $filter: ModelSubscriptionUserProfileFilterInput
   $owner: String
@@ -119,7 +159,6 @@ export const onCreateUserProfile = /* GraphQL */ `subscription OnCreateUserProfi
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -128,15 +167,12 @@ export const onCreateUserProfile = /* GraphQL */ `subscription OnCreateUserProfi
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
@@ -164,7 +200,6 @@ export const onDeleteCreditAccountInfo = /* GraphQL */ `subscription OnDeleteCre
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -172,6 +207,10 @@ export const onDeleteCreditAccountInfo = /* GraphQL */ `subscription OnDeleteCre
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -190,6 +229,7 @@ export const onDeleteCreditAccountInfo = /* GraphQL */ `subscription OnDeleteCre
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -202,31 +242,43 @@ export const onDeleteCreditTransaction = /* GraphQL */ `subscription OnDeleteCre
   $owner: String
 ) {
   onDeleteCreditTransaction(filter: $filter, owner: $owner) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -253,6 +305,30 @@ export const onDeleteNewAccounts = /* GraphQL */ `subscription OnDeleteNewAccoun
   APITypes.OnDeleteNewAccountsSubscriptionVariables,
   APITypes.OnDeleteNewAccountsSubscription
 >;
+export const onDeleteServiceProviders = /* GraphQL */ `subscription OnDeleteServiceProviders(
+  $filter: ModelSubscriptionServiceProvidersFilterInput
+) {
+  onDeleteServiceProviders(filter: $filter) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteServiceProvidersSubscriptionVariables,
+  APITypes.OnDeleteServiceProvidersSubscription
+>;
 export const onDeleteUserProfile = /* GraphQL */ `subscription OnDeleteUserProfile(
   $filter: ModelSubscriptionUserProfileFilterInput
   $owner: String
@@ -265,7 +341,6 @@ export const onDeleteUserProfile = /* GraphQL */ `subscription OnDeleteUserProfi
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -274,15 +349,12 @@ export const onDeleteUserProfile = /* GraphQL */ `subscription OnDeleteUserProfi
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
@@ -310,7 +382,6 @@ export const onUpdateCreditAccountInfo = /* GraphQL */ `subscription OnUpdateCre
     balanceOwing
     createdAt
     creditAccount
-    creditAccountId
     creditLimit
     dueDate
     id
@@ -318,6 +389,10 @@ export const onUpdateCreditAccountInfo = /* GraphQL */ `subscription OnUpdateCre
     monthsDefault
     monthsPaid
     owner
+    transactions {
+      nextToken
+      __typename
+    }
     updatedAt
     userProfile {
       accountOwner
@@ -336,6 +411,7 @@ export const onUpdateCreditAccountInfo = /* GraphQL */ `subscription OnUpdateCre
       updatedAt
       __typename
     }
+    userProfileId
     __typename
   }
 }
@@ -348,31 +424,43 @@ export const onUpdateCreditTransaction = /* GraphQL */ `subscription OnUpdateCre
   $owner: String
 ) {
   onUpdateCreditTransaction(filter: $filter, owner: $owner) {
-    activeProfile {
-      accountOwner
-      address
-      contacts
+    amount
+    createdAt
+    creditAccount {
+      accountStatus
+      availableCredit
+      balanceOwing
       createdAt
-      email
-      govId
+      creditAccount
+      creditLimit
+      dueDate
       id
-      incomeType
-      localExpense
-      name
+      minimumDue
+      monthsDefault
+      monthsPaid
       owner
-      signDeclaration
-      surname
+      updatedAt
+      userProfileId
+      __typename
+    }
+    creditAccountId
+    fromAccount
+    id
+    newBalance
+    owner
+    serviceProvider {
+      address
+      createdAt
+      id
+      operatingTimes
+      providerName
+      serviceType
+      storeId
+      telephone
       updatedAt
       __typename
     }
-    amount
-    createdAt
-    creditTransactionId
-    fromAccount
-    id
-    owner
-    providerName
-    providerType
+    serviceProviderId
     transType
     updatedAt
     __typename
@@ -399,6 +487,30 @@ export const onUpdateNewAccounts = /* GraphQL */ `subscription OnUpdateNewAccoun
   APITypes.OnUpdateNewAccountsSubscriptionVariables,
   APITypes.OnUpdateNewAccountsSubscription
 >;
+export const onUpdateServiceProviders = /* GraphQL */ `subscription OnUpdateServiceProviders(
+  $filter: ModelSubscriptionServiceProvidersFilterInput
+) {
+  onUpdateServiceProviders(filter: $filter) {
+    address
+    createdAt
+    id
+    operatingTimes
+    providerName
+    serviceType
+    storeId
+    telephone
+    transactions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateServiceProvidersSubscriptionVariables,
+  APITypes.OnUpdateServiceProvidersSubscription
+>;
 export const onUpdateUserProfile = /* GraphQL */ `subscription OnUpdateUserProfile(
   $filter: ModelSubscriptionUserProfileFilterInput
   $owner: String
@@ -411,7 +523,6 @@ export const onUpdateUserProfile = /* GraphQL */ `subscription OnUpdateUserProfi
       balanceOwing
       createdAt
       creditAccount
-      creditAccountId
       creditLimit
       dueDate
       id
@@ -420,15 +531,12 @@ export const onUpdateUserProfile = /* GraphQL */ `subscription OnUpdateUserProfi
       monthsPaid
       owner
       updatedAt
+      userProfileId
       __typename
     }
     address
     contacts
     createdAt
-    creditTransaction {
-      nextToken
-      __typename
-    }
     email
     govId
     id
