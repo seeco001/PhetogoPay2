@@ -91,6 +91,7 @@ const schema = a
                 creditAccount: a.string(),
                 accountStatus: a.string(),
                 availableCredit: a.integer(),
+                latestTransactionAmount: a.integer(), //just added this update
                 balanceOwing: a.integer(),
                 creditLimit: a.integer(),
                 minimumDue: a.integer(),
