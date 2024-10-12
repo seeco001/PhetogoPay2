@@ -87,7 +87,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
           );
           //logger.info(`WhatsApp message sent successfully to ${phoneNumber}`);
       } catch (error) {
-        logger.error(`Failed to send WhatsApp message: ${error.message}`);
+        //logger.error(`Failed to send WhatsApp message: ${error.message}`);
       }
   ///////////////////////////////////////////////////////////////////////////////////////
 
