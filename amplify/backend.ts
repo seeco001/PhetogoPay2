@@ -31,7 +31,7 @@ const policy = new Policy(
     ],
   }
 );
-//good
+
 backend.myDynamoDBFunction.resources.lambda.role?.attachInlinePolicy(policy);
 
 const mapping = new EventSourceMapping(
@@ -39,7 +39,7 @@ const mapping = new EventSourceMapping(
   "MyDynamoDBFunctionTodoEventStreamMapping",
   {
     target: backend.myDynamoDBFunction.resources.lambda,
-    eventSourceArn: creditAccountInfoTableL.tableStreamArn,
+    eventSourceArn: creditAccountInfoTable.tableStreamArn,
     startingPosition: StartingPosition.LATEST,
   }
 );
