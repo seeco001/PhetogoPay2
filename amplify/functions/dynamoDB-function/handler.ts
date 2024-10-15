@@ -1,6 +1,6 @@
 import type { DynamoDBStreamHandler } from "aws-lambda";
 import { Logger } from "@aws-lambda-powertools/logger";
-import axios from "axios";
+//import axios from "axios";
 
 const logger = new Logger({
   logLevel: "INFO",
@@ -75,24 +75,21 @@ export const handler: DynamoDBStreamHandler = async (event) => {
 
       try {
           logger.info(`******beginning of try-catch******`);
-          await axios.post(
+          await fetch(
               `https://graph.facebook.com/v20.0/364994256697626/messages`,
-              //`${WHATSAPP_API_URL}/v13.0/your-whatsapp-business-id/messages`,
-               messageData,
               {
-                headers: {
-                  Authorization: `Bearer EAAGUVZCd5HZAUBO51c8nfBTZBLfkLkmwHBm8SE4S0dOpANm2YDvGSf9InZANOHV0U2xTnHbFQuXRa8aD7T4Euymvqo7WGsZBk2N3CEfYrh1ikZCcmxgZBSdicvIw1TwPdQ1sNfaRZBXK6OCscOHeY0ZAu1ShK1PNZC580hUTtklydNZCWs7MLoD7Cu69lWYD36JhgKaahAW8Xlvano3zByevam11valE0Q4TH3ZAqCx3CSh0`,
-                  'Content-Type': `application/json`
-                }
+                  method: 'POST',
+                  headers: {
+                      Authorization: `Bearer EAAGUVZCd5HZAUBO51c8nfBTZBLfkLkmwHBm8SE4S0dOpANm2YDvGSf9InZANOHV0U2xTnHbFQuXRa8aD7T4Euymvqo7WGsZBk2N3CEfYrh1ikZCcmxgZBSdicvIw1TwPdQ1sNfaRZBXK6OCscOHeY0ZAu1ShK1PNZC580hUTtklydNZCWs7MLoD7Cu69lWYD36JhgKaahAW8Xlvano3zByevam11valE0Q4TH3ZAqCx3CSh0`,
+                      'Content-Type': `application/json`
+                      },
+                  body: JSON.stringify(messageData)
               }
           );
           logger.info(`******axios post happened******`);
-          //logger.info(`WhatsApp message sent successfully to ${phoneNumber}`);
       } catch (error) {
           logger.info(`******Unfortunately catch******`);
-        //logger.error(`Failed to send WhatsApp message: ${error.message}`);
       }
-  ///////////////////////////////////////////////////////////////////////////////////////
 
 
       logger.info(`New Image: ${JSON.stringify(record.dynamodb?.NewImage)}`);
