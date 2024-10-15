@@ -75,7 +75,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
 
       try {
           logger.info(`******beginning of try-catch******`);
-          await fetch(
+          const response = await fetch(
               `https://graph.facebook.com/v20.0/364994256697626/messages`,
               {
                   method: 'POST',
@@ -86,6 +86,14 @@ export const handler: DynamoDBStreamHandler = async (event) => {
                   body: JSON.stringify(messageData)
               }
           );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const responseData = await response.json();
+          logger.info(`******fetch request succeeded******`);
+          logger.info(`Response data: ${JSON.stringify(responseData)}`);
+
           logger.info(`******axios post happened******`);
       } catch (error) {
           logger.info(`******Unfortunately catch******`);
