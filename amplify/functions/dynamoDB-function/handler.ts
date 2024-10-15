@@ -25,7 +25,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
        const messageData = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": "+27732201360",
+            "to": "27762920003",
             "type": "template",
             "template": {
                 "name": "phetogopay_transactions",
@@ -39,7 +39,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
                     {
                       "type": "image",
                       "image": {
-                        "link": "https://whatsappbanner.s3.eu-west-1.amazonaws.com/PhetogoPay_Transactions.png?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFIaCWV1LXdlc3QtMSJHMEUCIC7REd6vqJndDc%2Bx%2BfShOiqNPzcLlsdM24Ndfg4uKF%2BpAiEAjJTpobptG59WlftPo20ahUdxb07ozhl1jfa%2BlW1cE8Iq7QIIqv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw5NzUwNDk4OTMwMDciDAM9Ab6CGWeEdprHYCrBAkpFM9ESb7n1C5a51DkJAPu6uARGphgocTVD2aNMHZtvXBuRhkhd0R6Z3FLvPI12BvreTtnjhvqHNj27IQxZT%2Biv2KBAIAG10IfYmR7uObtgQVvXS3jpi7Tk%2FsXFsVlm0Op%2BK9PfnTwta8GtuvksvSSmMQiajR7Jnn444WW8ZOIqU%2Font0DLA4HgITicJ85F8iRNvpkEzZURmUB5O8QC5EK7xXDEMx1gMpq6yCJnzoKp0pBWvffYjysV9%2BRiyVT7q2xDtNgox7MKFW3YKa8HpPfambgapoSGcUUiXYOfhiMxofL1XX7jdet%2BgKSNrZCrvKXe5YmMb4mDLxfItoc9EwcgV%2BDC%2FfCJguXSJLLRplr%2BdAfA6fZezT%2BMVDsfMPjle2wb%2FwI8oL58YDomR%2FMJWqzYd8j2I39%2BCyZyRdjgxu0NADC%2Fwqm4BjqzAnvCy9ker8dUfqsmOg%2B4bTBWl5ofxxwLoXuBakyVfDjMh9lSzzjwLyJ96ouAb02K3Iq1tPSF7AATk%2FnRDwII1xhd%2BXUB%2FMhiWUSzcOvh2WhrLb8eAyrEFswYwO6%2BuYcYjPdg9Hobw6mqZRfAlJwu5Mx1kWo9tvauzMxc%2B94kLquo7%2BLws%2F4iLETyLb7kX70sq%2Fi6HDJvVI%2Fec8vfbuYIBsOkeWthccU9N39l7zCuEpxAmz3bEgQszBwpvRLhDoxDP2DV%2BbG8zm%2FugOzZyHog%2BCSRR2yWhtHiUohf7hct2Ev4ds0mvF%2B6aq8n1CwOWcAjZ5OWFwlhLE8lZuCJLFv%2BQrJMB2b3KiUCcp6RM1ayT2gcdXitxfZ54yxIPWGj7xau%2FI1M6%2FNPeDLvP2bZ%2By4QYuU2fhM%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241012T172806Z&X-Amz-SignedHeaders=host&X-Amz-Expires=43200&X-Amz-Credential=ASIA6GBMAUSHUDTZOUK5%2F20241012%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=7fe8a3f9e94dbcded04aa2b5d2f1f9969fab145805747098381903dfd0de7dd3"
+                        "link": "https://whatsappbanner.s3.eu-west-1.amazonaws.com/PhetogoPay_Transactions.png?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCWV1LXdlc3QtMSJHMEUCIA65y%2BOJitfq8R%2F8h2%2FNTgEkNbmOJvdcekSro48%2FDaXCAiEAj8RiCasGJSUYTKtw2Pk1ewqLByCs9qyCiMyTqUYCas4q7QII7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw5NzUwNDk4OTMwMDciDI8Iu7sBWUVQ9VDLwyrBAlyCoTEnvFzQm1Mt6Sb8AFsLZQnYJLq79LOI5dI5%2B0ijik5ddutreedPmNT%2BLdoAHHnaRZgJBT9NrRRyKphWQDvZGsT3LabxQp5Wsq0PJgXsAVm7%2B6KPv9OiRX3r%2BuXmgHNU0NZ9n8Z5xFqUEtcsgD1g5vjpLpZOY9HdaMBCNAz4sSpSzgRK3AVVCVLgRWsybTkQQhKutDfCZ1IRfFLTY1woqsmBHOOwu0eU%2Bp0cMg8UbJYd%2FoFQ5ftFKVp3cklmuQK7nYMYcV0bHeJL1ilqHl7yGnzkSLVHdVTyU4YgIDNC0tEpdtF6klqQkAU0qJ9Q9ET6vO6%2Fnm%2Byu34Q9HM5Tf%2FgOQs9bYySz2FDnJVi6A7jlWx75C%2F2DMy3LyySuq6UaGj2VS8wccbY59qeVCbBEtv%2FkOvKUjHlqlL%2F7kygznvYxjD31rm4BjqzAnWIyjvupLsoNews9FYYa%2FZ9rd3yKgPpUcY4Z9sBx1GBLxCL1ROJ1Ep%2BY%2B9RrnXfUIbTO%2Bk8OmhcvzSxr27S9%2BzFHbRkOiYeQ3GyVwpHlPViLfQlKsIx17WT%2BYgm8HbNFhIvDRG%2Fi7FuM6Rm%2F3%2F1hM6q%2FIsHohvELnP%2F5CVzl0faa%2B9buWLqz7zDBC%2FClxu2ykNQ46nmL6SrxHK80Z3aiHq8mhhPeCvK3bExWZHTorO5d3qY100XC8%2F7Zq0JjCqDvHFMxJE6KPOANRRe6wiCRjOCFTyGT9l9Y1QPqMVJzAjTCtey%2FsX7MlxshyNx8tXnVY8XxN9Rp%2BDVr7MYOZJ6GxUhxJgOxGdF01f2vu8aP2xauv8J7FZ7wsFSirmRGaKH31KIOccHINtt%2Bmjfq%2B91wgGFRsQ%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241015T140955Z&X-Amz-SignedHeaders=host&X-Amz-Expires=43200&X-Amz-Credential=ASIA6GBMAUSHTYBS72PQ%2F20241015%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=ecd673c042bdc4a293ac1b447fe858702413bd36b8d73da5b17fb8d7236f3d5d"
                       }
                     }
                   ]
@@ -76,13 +76,13 @@ export const handler: DynamoDBStreamHandler = async (event) => {
       try {
           logger.info(`******beginning of try-catch******`);
           await axios.post(
-              `https://graph.facebook.com/v21.0/364994256697626/messages`,
+              `https://graph.facebook.com/v20.0/364994256697626/messages`,
               //`${WHATSAPP_API_URL}/v13.0/your-whatsapp-business-id/messages`,
                messageData,
               {
                 headers: {
-                  Authorization: `Bearer EAAGUVZCd5HZAUBO8BhydhwAWpoLnWpSZAfofAF8JvmPKNXXbuzd73jQZBmRZCCsX6Yv4kQqxO4AZCQhQyjwXb0enLESWSDo58PcibsYW5NS9IsK1IYXtB0QLDmHTKNY4ASQGp5ZAoWWmLvVV4fTKZByqTZAZAq2PD2JJBhZBUkknFFpgEaCS9tHnLkTBeIHgb7rnv75gyZCnwnyZCWhGibz32HV6PpFKrTxU1n2HZBC0n32210`,
-                  "Content-Type": `application/json`
+                  Authorization: `Bearer EAAGUVZCd5HZAUBO51c8nfBTZBLfkLkmwHBm8SE4S0dOpANm2YDvGSf9InZANOHV0U2xTnHbFQuXRa8aD7T4Euymvqo7WGsZBk2N3CEfYrh1ikZCcmxgZBSdicvIw1TwPdQ1sNfaRZBXK6OCscOHeY0ZAu1ShK1PNZC580hUTtklydNZCWs7MLoD7Cu69lWYD36JhgKaahAW8Xlvano3zByevam11valE0Q4TH3ZAqCx3CSh0`,
+                  'Content-Type': `application/json`
                 }
               }
           );
