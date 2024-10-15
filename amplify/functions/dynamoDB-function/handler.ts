@@ -86,10 +86,10 @@ export const handler: DynamoDBStreamHandler = async (event) => {
                   body: JSON.stringify(messageData)
               }
           );
-          logger.info(`******Here lies our problems: !response.ok******`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+//           logger.info(`******Here lies our problems: !response.ok******`);
+//           if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//           }
           logger.info(`******Here lies our problems: responseData = await response.json()******`);
 
           const responseData = await response.json();
