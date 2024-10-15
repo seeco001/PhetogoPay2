@@ -81,7 +81,7 @@ export const handler: DynamoDBStreamHandler = async (event) => {
                   method: 'POST',
                   headers: {
                       Authorization: `Bearer EAAGUVZCd5HZAUBO51c8nfBTZBLfkLkmwHBm8SE4S0dOpANm2YDvGSf9InZANOHV0U2xTnHbFQuXRa8aD7T4Euymvqo7WGsZBk2N3CEfYrh1ikZCcmxgZBSdicvIw1TwPdQ1sNfaRZBXK6OCscOHeY0ZAu1ShK1PNZC580hUTtklydNZCWs7MLoD7Cu69lWYD36JhgKaahAW8Xlvano3zByevam11valE0Q4TH3ZAqCx3CSh0`,
-                      'Content-Type': `application/json`
+                      'Content-Type': 'application/json'
                       },
                   body: JSON.stringify(messageData)
               }
